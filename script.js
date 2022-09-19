@@ -200,7 +200,7 @@ function displayStudentList(student) {
     // ** 4.2.4  clone qS [data-field="LastName"] = student.lastName
     clone.querySelector("[data-field=lastName]").innerHTML = `<u>Last name</u> : <b>${student.lastName}</b>`;
     // ** 4.2.5  clone qS [data-field="gender"] = student.gender
-    clone.querySelector("[data-field=gender]").innerHTML = `<u>Gender</u> :<b>${student.gender}</b>`;
+    clone.querySelector("[data-field=gender]").innerHTML = `<u>Gender</u> : <b>${student.gender}</b>`;
     // ** 4.2.6  clone qS [data-field="imgSrc"].src = student.imgSrc
     clone.querySelector("[data-field=imgSrc]").src = student.imgSrc;
     clone.querySelector("[data-field=imgSrc]").alt = `picture of ${student.lastName}, ${student.firstName}`;
@@ -233,9 +233,9 @@ function displayStudentModal(student) {
   studentModal.querySelector("[data-field=imgSrc]").src = student.imgSrc;
   studentModal.querySelector("[data-field=imgSrc]").alt = `picture of ${student.lastName}, ${student.firstName}`;
   studentModal.querySelector("[data-field=fullName]").textContent = `${student.firstName} ${student.lastName}`;
-  studentModal.querySelector("[data-field=middleName]").textContent = `Middle Name : ${student.middleName}`;
-  studentModal.querySelector("[data-field=nickName]").textContent = `Nick Name : ${student.NickName}`;
-  studentModal.querySelector("[data-field=gender]").textContent = `Gender : ${student.gender}`;
+  studentModal.querySelector("[data-field=middleName]").innerHTML = `<u>Middle Name</u> : ${student.middleName}`;
+  studentModal.querySelector("[data-field=nickName]").innerHTML = `<u>Nick Name</u> : ${student.NickName}`;
+  studentModal.querySelector("[data-field=gender]").innerHTML = `<u>Gender</u> : ${student.gender}`;
   // TODO add blood status
   // studentModal.querySelector("[data-field=bloodStatus]").textContent += ` : ${student.blood}`;
 

@@ -112,5 +112,7 @@ h2 {
 }
 
 .close {
+  position: absolute;
+  right: 5%;
   cursor: pointer;
 }
