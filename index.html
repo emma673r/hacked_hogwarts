@@ -1,9 +1,73 @@
-<!*** JSON FILES -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="style.css
+    "
+    />
+    <title>Hogwarts Intranet</title>
+  </head>
+  <body>
+    <h1>Cleaning Hogswarts Data</h1>
+    <section id="student_list"></section>
+    <template id="student"
+      ><div class="single_student">
+        <h2 data-field="fullName">Full Name</h2>
+        <div class="wrapper">
+          <img data-field="imgSrc" class="student_image" src="" alt="" />
+          <div>
+            <div>
+              <div data-field="firstName">First Name</div>
+              <div data-field="lastName">Last Name</div>
+              <div data-field="gender">Gender</div>
+            </div>
+            <div class="images_wrap">
+              <img class="house_crest" data-field="imgHouseSrc" src="" alt="house">
+              <img class="squad_logo" data-field="imgSquadSrc" src="images/assets/squad.png" alt="squad">
+              <img class="prefect_logo" data-field="imgPrefectSrc" src="images/assets/prefect.png" alt="prefect">
+          </div>
+          </div>
+        </div>
+      </div>
+    </template>
 
-<!-- students list -->
 
-<!***-- https://petlatkea.dk/2021/hogwarts/students.json -->
-
-<!-- blood status list -->
-
-<!***-- https://petlatkea.dk/2021/hogwarts/families.json -->
+        <section id="student_modal" class="student-details">
+      <div class="close">&#x2715</div>
+      <!-- student content -->
+      <div class="student-details-content">
+        <h4 data-field="fullName">first name and last name here</h2>
+          <div class="primary">
+            <img class="student_image" src="" alt="" data-field="imgSrc" />
+            <div>
+              <div data-field="middleName">Middle Name</div>
+              <div data-field="nickName">Nick Name</div>
+              <div data-field="bloodStatus">Blood Status</div>
+              <div data-field="gender">Gender</div>
+            </div>
+          </div>
+          <div class="secondary">
+            <h5>Extra Information</h5>
+            <div>
+              <img class="house_crest" data-field="imgHouseSrc" src="" alt="">
+              <img class="squad_logo" data-field="imgSquadSrc" src="" alt="">
+              <img class="prefect_logo" data-field="imgPrefectSrc" src="" alt="">
+            </div>
+          </div>
+          <div class="actions">
+            <h5>Actions</h5>
+            <div>
+              <button data-field="expel">Expel student</button>
+              <button data-field="makeSquad">Add to Inquisitorial squad</button>
+              <button data-field="makePrefect">Make prefect</button>
+            </div>
+          </div>
+      </div>
+    </section>
+    <script src="script.js"></script>
+  </body>
+</html>
