@@ -55,7 +55,7 @@ h2 {
   color: brown;
 }
 
-#student_modal {
+/* #student_modal {
   position: fixed;
   top: 40px;
   left: 150px;
@@ -63,9 +63,27 @@ h2 {
   padding: 20px;
   min-width: 50ch;
   max-width: 90ch;
+} */
+
+#student_modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .student-details-content {
+  border: 10px double goldenrod;
+  padding: 30px;
+  position: fixed;
+  top: 20vh;
+  left: 30vw;
   width: 50ch;
   display: flex;
   flex-direction: column;

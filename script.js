@@ -147,7 +147,7 @@ function cleanStudentData() {
 
     // if student name has no last name - Leanne
     if (!fullName.includes(" ")) {
-      imgSrc = `no_image`;
+      imgSrc = `/images/no_image.png`;
     }
     // only 2 img src same last name - Patil (Parvati & Padma)
     // so if student name includes patil
