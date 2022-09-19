@@ -12,6 +12,9 @@ const Student = {
   lastName: "",
   imageSrc: "",
   house: "",
+  prefect: false,
+  squad: false,
+  expelled: false,
 };
 
 const studentList = document.getElementById("student_list");
@@ -208,12 +211,16 @@ function displayStudentList(student) {
     // ** 4.2.7  clone qS [data-field="house"] = student.house
     clone.querySelector(`[data-field="imgHouseSrc"]`).src = `/images/house/${student.house.toLowerCase()}.png`;
     clone.querySelector(`[data-field="imgHouseSrc"]`).alt = `${student.house}`;
-
-    // clone inquisitorial
-    clone.querySelector(`[data-field="imgSquadSrc"]`).style.filter = "grayscale(100%)";
-    // clone prefect
-    clone.querySelector(`[data-field="imgPrefectSrc"]`).style.filter = "grayscale(100%)";
-
+    // TODO lone prefect and add greyscale if false
+    clone.querySelector("[data-field=prefect]").dataset.prefect = student.prefect;
+    if (student.prefect === false) {
+      clone.querySelector(`[data-field="prefect"]`).style.filter = "grayscale(100%)";
+    }
+    // TODO lone squad and add greyscale if false
+    clone.querySelector("[data-field=squad]").dataset.squad = student.squad;
+    if (student.squad === false) {
+      clone.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
+    }
     // add event listener to each student click and get details
     clone.querySelector(".single_student").addEventListener("click", () => displayStudentModal(student));
 
@@ -241,8 +248,8 @@ function displayStudentModal(student) {
 
   studentModal.querySelector(`[data-field="imgHouseSrc"]`).src = `/images/house/${student.house.toLowerCase()}.png`;
   studentModal.querySelector(`[data-field="imgHouseSrc"]`).alt = `${student.house}`;
-  studentModal.querySelector(`[data-field="imgSquadSrc"]`).src = `/images/assets/squad.png`;
-  studentModal.querySelector(`[data-field="imgSquadSrc"]`).style.filter = "grayscale(100%)";
-  studentModal.querySelector(`[data-field="imgPrefectSrc"]`).src = `/images/assets/prefect.png`;
-  studentModal.querySelector(`[data-field="imgPrefectSrc"]`).style.filter = "grayscale(100%)";
+  studentModal.querySelector(`[data-field="squad"]`).src = `/images/assets/squad.png`;
+  studentModal.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
+  studentModal.querySelector(`[data-field="prefect"]`).src = `/images/assets/prefect.png`;
+  studentModal.querySelector(`[data-field="prefect"]`).style.filter = "grayscale(100%)";
 }
