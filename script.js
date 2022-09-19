@@ -211,12 +211,12 @@ function displayStudentList(student) {
     // ** 4.2.7  clone qS [data-field="house"] = student.house
     clone.querySelector(`[data-field="imgHouseSrc"]`).src = `/images/house/${student.house.toLowerCase()}.png`;
     clone.querySelector(`[data-field="imgHouseSrc"]`).alt = `${student.house}`;
-    // TODO lone prefect and add greyscale if false
+    // TODO clone prefect and add greyscale if false
     clone.querySelector("[data-field=prefect]").dataset.prefect = student.prefect;
     if (student.prefect === false) {
       clone.querySelector(`[data-field="prefect"]`).style.filter = "grayscale(100%)";
     }
-    // TODO lone squad and add greyscale if false
+    // TODO clone squad and add greyscale if false
     clone.querySelector("[data-field=squad]").dataset.squad = student.squad;
     if (student.squad === false) {
       clone.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";

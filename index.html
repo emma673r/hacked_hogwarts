@@ -12,8 +12,104 @@
     <title>Hogwarts Intranet</title>
   </head>
   <body>
+    <header>
+      <!-- hogwarts intranet logo -->
+      <img src="images/assets/hogwarts.png" alt="logo">
+      <!-- h1 intranet -->
     <h1>Welcome to Hogwarts Intranet</h1>
-    <section id="student_list"></section>
+
+    </header>
+    <main>
+      <!-- section 1 nav bars -->
+      <section id="section_1">
+        <h2>Filter and Sort</h2>
+        <input id="search_bar" type="text">
+        <div id="filtering_bar">
+          <h3>Filter by:</h3>
+          <button>Show all</button>
+          <div id="filter_house">
+            <h4>House</h4>
+            <button>Gryffindor</button>
+            <button>Slythering</button>
+            <button>Ravenclaw</button>
+            <button>Hufflepuff</button>
+          </div>
+          <div id="filter_blood">
+            <h4>Blood status</h4>
+            <button>All pure bloods</button>
+            <button>All half bloods</button>
+          </div>
+          <div id="filter_gender">
+            <h4>Gender</h4>
+            <button>All female students</button>
+            <button>All male students</button>
+          </div>
+          <div id="filter_lists">
+            <h4>Lists</h4>
+          <button id="squad_list">Show Squad list</button>
+        <button id="prefects_list">Show Prefects</button>
+        <button id="expelled_list">Show expelled students</button></div>
+        </div>
+        <div id="sorting_bar">
+          <h3>Sort by:</h3>
+          <button>First Names</button>
+          <button>Last Names</button>
+          <button>Houses</button>
+          <button>Gender</button>
+        </div>
+
+      </section> 
+
+      <!-- section 2 hogwarts data -->
+      <section id="section_2">
+        <h2>Hogwarts Students</h2>
+        <!-- article hogwarts list -->
+        <article id="student_list">
+          <!-- json clone displayed here -->
+        </article>
+      </section>
+        <!-- section 3 counting students bar -->
+      <section id="section_3">
+        <h2>Information</h2>
+
+        <article id="counting_bar">
+          <div>
+            <h3>In total</h3>
+            <p id="count_total">X students in total</p></div>
+          <div>
+            <h3>Gryffindor</h3>
+            <p id="count_gry"> <img class="count_crest" src="images/house/gryffindor.png" alt="gryffindor crest">X students</p>
+          </div>
+          <div>
+            <h3>Slytherin</h3>
+            <p id="count_sly"> <img class="count_crest" src="images/house/slytherin.png" alt="slytherin crest">X students</p>
+          </div>
+          <div>
+            <h3>Ravenclaw</h3>
+            <p id="count_rav"> <img class="count_crest"  src="images/house/ravenclaw.png" alt="ravenclaw crest">X students</p>
+          </div>
+          <div>
+            <h3>Hufflepuff</h3>
+            <p id="count_huf"> <img class="count_crest"  src="images/house/hufflepuff.png" alt="hufflepuff crest">X students</p>
+          </div>
+          <div>
+            <h3>Expelled</h3>
+            <p id="count_expelled">X expelled students</p></div>
+          <div>
+            <h3>Actually displayed</h3>
+            <p id="count_expelled">X displayed students</p></div>
+          <div>
+            <h3>Inquisitorial</h3>
+            <p id="count_squad">X in squad</p></div>
+          <div>
+            <h3>Pure bloods</h3>
+            <p id="count_pure">X pure bloods</p></div>
+        </article>
+      </section>
+
+
+
+    <!-- template -->
     <template id="student"
       ><div class="single_student">
         <h2 data-field="fullName">Full Name</h2>
@@ -35,8 +131,8 @@
       </div>
     </template>
 
-
-        <section id="student_modal" class="student-details">
+    <!-- modal student -->
+    <section id="student_modal" class="student-details">
 
       <!-- student content -->
       <div class="student-details-content">      <div class="close">&#x2715</div>
@@ -68,6 +164,10 @@
           </div>
       </div>
     </section>
+
+    </main>
+
+
     <script src="script.js"></script>
   </body>
 </html>

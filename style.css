@@ -2,6 +2,34 @@
   background-color: lightgoldenrodyellow;
 }
 
+html,
+body,
+header,
+footer {
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+header img {
+  background-color: inherit;
+}
+
+main {
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-top: 30px;
+}
+
+header {
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+  background-color: goldenrod;
+}
+
 button {
   cursor: pointer;
 }
@@ -11,11 +39,17 @@ img {
   height: 100%;
 }
 
+/* 
+#student_list h3 {
+pla
+} */
+
 #student_list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 10px;
+  justify-content: space-around;
 }
 
 .images_wrap {
@@ -42,7 +76,7 @@ img {
 .single_student {
   border: 4px solid goldenrod;
   padding: 0 0 20px 20px;
-  width: 50ch;
+  width: 45ch;
   cursor: pointer;
   /* height: 35ch; */
 }
@@ -54,16 +88,6 @@ img {
 h2 {
   color: brown;
 }
-
-/* #student_modal {
-  position: fixed;
-  top: 40px;
-  left: 150px;
-  border: solid 3px black;
-  padding: 20px;
-  min-width: 50ch;
-  max-width: 90ch;
-} */
 
 #student_modal {
   position: fixed;
@@ -115,4 +139,43 @@ h2 {
   position: absolute;
   right: 5%;
   cursor: pointer;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  gap: 20px;
+}
+
+/* #section_2 {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 1fr auto;
+}
+
+#section_2 h2 {
+    grid-row: 1;
+} */
+
+/* #student_list,
+#counter_bar {
+  grid-row: 2;
+} */
+
+#section_1 {
+  border-right: solid 2px goldenrod;
+  padding-right: 10px;
+}
+
+#section_3 {
+  border-left: solid 2px goldenrod;
+  padding-left: 10px;
+}
+
+#section_3 img {
+  width: 25%;
+}
+
+.count_crest {
+  padding-right: 10px;
 }
