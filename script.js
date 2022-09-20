@@ -335,7 +335,7 @@ function displayStudentCounts(allGryffindorArray, allSlytherinArray, allRavencla
 
 // * make prefects - remove prefects (visible with icon)
 
-// * stop adding more than 2 prefects of each houses 
+// * stop adding more than 2 prefects of each houses (make algorithm)
 
 // * display popup prefects
 
@@ -343,7 +343,7 @@ function displayStudentCounts(allGryffindorArray, allSlytherinArray, allRavencla
 
 // * make squad - remove squad (visible with icon)
 
-// * display notification popup when onf of these 3 actions are performed - woth student info
+// * display notification popup when onf of these 3 actions are performed - with student info
 
 // * fetch blood status data
 
@@ -356,3 +356,7 @@ function displayStudentCounts(allGryffindorArray, allSlytherinArray, allRavencla
 // * display all those new arrays --- remember also display the current number of displayed
 
 // !!!!!* function hackedHogwarts() and everything that has to happen (look at diagrams)
+
+
+
+// !REMEMBER! Documentation for all of the process hahahahahahahaha
