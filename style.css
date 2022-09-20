@@ -76,7 +76,6 @@ pla
 .crest_h3 {
   display: flex;
   align-items: center;
-  padding-bottom: 20px;
 }
 
 .crest_h3 h3 {
@@ -204,6 +203,9 @@ footer img {
 .arrow_up {
   font-size: 5rem;
   background-color: transparent;
+  width: 4ch;
+  display: flex;
+  justify-content: right;
 }
 
 footer div {
