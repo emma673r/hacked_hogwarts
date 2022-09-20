@@ -269,3 +269,7 @@ footer a {
   color: goldenrod;
   text-decoration: none;
 }
+
+#counting_bar div {
+  padding-bottom: 20px;
+}
