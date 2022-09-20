@@ -73,6 +73,15 @@ pla
   padding: 3px;
 }
 
+.crest_h3 {
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.crest_h3 h3 {
+  margin: 0;
+}
 
 .single_student {
   border: 4px solid goldenrod;

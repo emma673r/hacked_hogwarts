@@ -247,6 +247,8 @@ function displayStudentList(student) {
     // ** 4.3 APPEND studentList.appenChild(clone);
     studentList.appendChild(clone);
   });
+
+  countStudents(allCleanStudents);
 }
 
 function displayStudentModal(student) {
@@ -272,4 +274,37 @@ function displayStudentModal(student) {
   studentModal.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
   studentModal.querySelector(`[data-field="prefect"]`).src = `/images/assets/prefect.png`;
   studentModal.querySelector(`[data-field="prefect"]`).style.filter = "grayscale(100%)";
+}
+
+function countStudents(allCleanStudents) {
+  // TODO make arrays for each houses
+  const allGryffindorArray = allCleanStudents.filter((student) => student.house.toLowerCase().includes("gryffindor"));
+  const allSlytherinArray = allCleanStudents.filter((student) => student.house.toLowerCase().includes("slytherin"));
+  const allRavenclawArray = allCleanStudents.filter((student) => student.house.toLowerCase().includes("ravenclaw"));
+  const allHufflepuffArray = allCleanStudents.filter((student) => student.house.toLowerCase().includes("hufflepuff"));
+  // console.log(allRavenclaw)
+  // console.log(allHufflepuff)
+
+  // todo array for all actually displayed
+  // todo array for all squad
+  // todo array for all prefects
+  // todo array for all expelled
+  // todo array for all purebloods
+
+  displayStudentCounts(allGryffindorArray, allSlytherinArray, allRavenclawArray, allHufflepuffArray);
+}
+
+function displayStudentCounts(allGryffindorArray, allSlytherinArray, allRavenclawArray, allHufflepuffArray) {
+  // Todo display total count
+  document.getElementById("count_total").textContent = `${allCleanStudents.length} students in total`;
+  // todo display sudent count for each house
+  document.getElementById("count_gry").textContent = `${allGryffindorArray.length} Gryffindor students`;
+  document.getElementById("count_sly").textContent = `${allSlytherinArray.length} Slytherin students`;
+  document.getElementById("count_rav").textContent = `${allRavenclawArray.length} Ravenclaw students`;
+  document.getElementById("count_huf").textContent = `${allHufflepuffArray.length} Hufflepuff students`;
+  // todo display all actually displayed
+  // todo display all squad
+  // todo display all prefects
+  // todo display all expelled
+  // todo display all purebloods
 }
