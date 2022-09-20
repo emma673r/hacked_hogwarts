@@ -1,4 +1,4 @@
-* {
+html {
   background-color: lightgoldenrodyellow;
 }
 
@@ -73,6 +73,7 @@ pla
   padding: 3px;
 }
 
+
 .single_student {
   border: 4px solid goldenrod;
   padding: 0 0 20px 20px;
@@ -103,6 +104,7 @@ h2 {
 }
 
 .student-details-content {
+  background-color: lightgoldenrodyellow;
   border: 10px double goldenrod;
   padding: 30px;
   position: fixed;
@@ -111,6 +113,10 @@ h2 {
   width: 50ch;
   display: flex;
   flex-direction: column;
+}
+
+.student-details-content h4 {
+  font-size: 1.5rem;
 }
 
 .primary {
@@ -128,7 +134,6 @@ h2 {
 
 .student-details-content img {
   background-color: transparent;
-  /* width: 15%; */
 }
 
 .house_crest {
@@ -147,21 +152,6 @@ main {
   gap: 20px;
 }
 
-/* #section_2 {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-rows: 1fr auto;
-}
-
-#section_2 h2 {
-    grid-row: 1;
-} */
-
-/* #student_list,
-#counter_bar {
-  grid-row: 2;
-} */
-
 #section_1 {
   border-right: solid 2px goldenrod;
   padding-right: 10px;
@@ -178,4 +168,48 @@ main {
 
 .count_crest {
   padding-right: 10px;
+}
+
+footer {
+  padding-left: 30px;
+  padding-right: 30px;
+  color: goldenrod;
+  margin-top: 60px;
+  height: 30vh;
+  background-color: brown;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer h2 {
+  background-color: transparent;
+  color: goldenrod;
+}
+
+footer img {
+  background-color: transparent;
+  height: 60%;
+}
+
+.arrow_up {
+  font-size: 5rem;
+  background-color: transparent;
+}
+
+footer div {
+  width: 20ch;
+}
+
+.secret {
+  color: transparent;
+}
+
+.secret:hover {
+  color: goldenrod;
+}
+
+#section_1 button {
+  margin-left: 5px;
+  margin-bottom: 5px;
 }

@@ -211,6 +211,26 @@ function displayStudentList(student) {
     // ** 4.2.7  clone qS [data-field="house"] = student.house
     clone.querySelector(`[data-field="imgHouseSrc"]`).src = `/images/house/${student.house.toLowerCase()}.png`;
     clone.querySelector(`[data-field="imgHouseSrc"]`).alt = `${student.house}`;
+
+    // TODO add background and text color to memebers of each house
+    if (student.house.toLowerCase() === "slytherin") {
+      clone.querySelector(".single_student").style.backgroundColor = "#1a472a";
+      clone.querySelector(".single_student").style.color = "#aaaaaa";
+      clone.querySelector("[data-field=fullName]").style.color = "#aaaaaa";
+    } else if (student.house.toLowerCase() === "gryffindor") {
+      clone.querySelector(".single_student").style.backgroundColor = "#740001";
+      clone.querySelector(".single_student").style.color = "goldenrod";
+      clone.querySelector("[data-field=fullName]").style.color = "goldenrod";
+    } else if (student.house.toLowerCase() === "hufflepuff") {
+      clone.querySelector(".single_student").style.backgroundColor = "#f0c75e";
+      clone.querySelector(".single_student").style.color = "#372e29";
+      clone.querySelector("[data-field=fullName]").style.color = "#372e29";
+    } else if (student.house.toLowerCase() === "ravenclaw") {
+      clone.querySelector(".single_student").style.backgroundColor = "#222f5b";
+      clone.querySelector(".single_student").style.color = "#946b2d";
+      clone.querySelector("[data-field=fullName]").style.color = "#946b2d";
+    }
+
     // TODO clone prefect and add greyscale if false
     clone.querySelector("[data-field=prefect]").dataset.prefect = student.prefect;
     if (student.prefect === false) {
