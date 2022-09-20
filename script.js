@@ -17,6 +17,13 @@ const Student = {
   expelled: false,
 };
 
+const settings = {
+  filterBy: "all",
+  sortBy: "",
+  sortDir: "asc",
+  search: "",
+};
+
 const studentList = document.getElementById("student_list");
 const template = document.getElementById("student");
 const studentModal = document.getElementById("student_modal");
@@ -34,13 +41,13 @@ let list;
 function displayLogin() {
   //   console.log(`start`);
   studentModal.style.display = "none";
-  document.querySelector(".login_1").addEventListener("click", start)
-  document.querySelector(".login_2").addEventListener("click", start)
+  document.querySelector(".login_1").addEventListener("click", start);
+  document.querySelector(".login_2").addEventListener("click", start);
 }
 
 function start() {
   document.querySelector("#login_page").style.display = "none";
-    fetchData();
+  fetchData();
 }
 // step 2 : fetch data
 

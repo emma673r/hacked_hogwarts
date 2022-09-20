@@ -19,6 +19,7 @@
     <h1>Welcome to Hogwarts Intranet</h1>
 
     </header>
+
     <main>
       <!-- section 1 nav bars -->
       <section id="section_1">
@@ -27,36 +28,37 @@
         <input id="search_bar" name="search_bar" type="text" placeholder="Search here">
         <div id="filtering_bar">
           <h3>Filter by:</h3>
-          <button>Show all</button>
+          <button filter-value="all" data-filter="all">Show all</button>
           <div id="filter_house">
             <h4>House</h4>
-            <button>Gryffindor</button>
-            <button>Slythering</button>
-            <button>Ravenclaw</button>
-            <button>Hufflepuff</button>
+            <button filter-value="gryffindor" data-filter="house">Gryffindor</button>
+            <button filter-value="slytherin" data-filter="house">Slythering</button>
+            <button filter-value="ravenclaw" data-filter="house">Ravenclaw</button>
+            <button filter-value="hufflepuff" data-filter="house">Hufflepuff</button>
           </div>
           <div id="filter_blood">
             <h4>Blood status</h4>
-            <button>All pure bloods</button>
-            <button>All half bloods</button>
+            <button filter-value="pure" data-filter="blood">All pure bloods</button>
+            <button filter-value="half" data-filter="blood">All half bloods</button>
+            <button filter-value="muggle" data-filter="blood">All muggles</button>
           </div>
           <div id="filter_gender">
             <h4>Gender</h4>
-            <button>All female students</button>
-            <button>All male students</button>
+            <button filter-value="girl" data-filter="gender">All girl students</button>
+            <button filter-value="boy" data-filter="gender">All boy students</button>
           </div>
           <div id="filter_lists">
             <h4>Lists</h4>
-          <button id="squad_list">Show Squad list</button>
-        <button id="prefects_list">Show Prefects</button>
-        <button id="expelled_list">Show expelled students</button></div>
+            <button filter-value="squad" data-filter="squad" data-filter-value="true" id="squad_list">Show Squad list</button>
+            <button filter-value="prefect" data-filter="prefect" data-filter-value="true" id="prefects_list">Show Prefects</button>
+            <button filter-value="expelled" data-filter="expelled" data-filter-value="true" id="expelled_list">Show expelled students</button></div>
         </div>
         <div id="sorting_bar">
           <h3>Sort by:</h3>
-          <button>First Names</button>
-          <button>Last Names</button>
-          <button>Houses</button>
-          <button>Gender</button>
+          <button class="sort_btn" data-sort="firstName" data-dir="asc">First Names</button>
+          <button class="sort_btn" data-sort="lastName" data-dir="asc">Last Names</button>
+          <button class="sort_btn" data-sort="house" data-dir="asc">Houses</button>
+          <button class="sort_btn" data-sort="gender" data-dir="asc">Gender</button>
         </div>
 
       </section> 
@@ -108,8 +110,6 @@
         </article>
       </section>
 
-
-
     <!-- template -->
     <template id="student"
       ><div class="single_student">
@@ -136,7 +136,8 @@
     <section id="student_modal" class="student-details">
 
       <!-- student content -->
-      <div class="student-details-content">      <div class="close">&#x2715</div>
+      <div class="student-details-content">
+        <div class="close">&#x2715</div>
         <h4 data-field="fullName">first name and last name here</h2>
           <div class="primary">
             <img class="student_image" src="" alt="" data-field="imgSrc" />
@@ -194,7 +195,6 @@
           <button class="login_2">Login</button>
         </div>
           </div>
-        </div>
       </article>
     </section>
 
