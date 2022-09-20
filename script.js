@@ -1,6 +1,6 @@
 "use strict";
 
-window.addEventListener("DOMContentLoaded", start);
+window.addEventListener("DOMContentLoaded", displayLogin);
 
 // all my const
 const allCleanStudents = [];
@@ -31,10 +31,16 @@ let list;
 //* step 1 : start
 
 // start
-function start() {
+function displayLogin() {
   //   console.log(`start`);
   studentModal.style.display = "none";
-  fetchData();
+  document.querySelector(".login_1").addEventListener("click", start)
+  document.querySelector(".login_2").addEventListener("click", start)
+}
+
+function start() {
+  document.querySelector("#login_page").style.display = "none";
+    fetchData();
 }
 // step 2 : fetch data
 
