@@ -19,6 +19,7 @@ const Student = {
 
 const settings = {
   filterBy: "all",
+  filterValue: "all",
   sortBy: "",
   sortDir: "asc",
   search: "",
@@ -27,7 +28,6 @@ const settings = {
 const studentList = document.getElementById("student_list");
 const template = document.getElementById("student");
 const studentModal = document.getElementById("student_modal");
-// const singleStudent = document.querySelectorAll(".single_student");
 
 const url = "https://petlatkea.dk/2021/hogwarts/students.json ";
 
@@ -35,7 +35,7 @@ const url = "https://petlatkea.dk/2021/hogwarts/students.json ";
 
 let list;
 // ****** CONTROLLER
-//* step 1 : start
+//* start
 
 // start
 function displayLogin() {
@@ -49,6 +49,7 @@ function start() {
   document.querySelector("#login_page").style.display = "none";
   fetchData();
 }
+
 // step 2 : fetch data
 
 async function fetchData() {
@@ -61,9 +62,9 @@ async function fetchData() {
 }
 
 // ****** MODEL
-//* step 2 : init loop for each student aka prepare the student list
+//* init loop for each student aka prepare the student list
 
-// *step 3 clean the data
+// * clean the data
 function cleanStudentData() {
   //   console.log(`cleanStudentData`);
   //   foreach jsonStudent (not to confuse with const student!!)
@@ -197,7 +198,7 @@ function cleanStudentData() {
 }
 
 // ***** VIEW
-//* step 4 display/show the data
+//* display/show the data
 function displayStudentList(student) {
   console.log(`displayStudentList`);
   //   console.table(allCleanStudents)
@@ -264,6 +265,7 @@ function displayStudentList(student) {
   countStudents(allCleanStudents);
 }
 
+// * display single students extra info modal
 function displayStudentModal(student) {
   console.log(`Hello`);
   studentModal.style.display = "block";
@@ -289,6 +291,7 @@ function displayStudentModal(student) {
   studentModal.querySelector(`[data-field="prefect"]`).style.filter = "grayscale(100%)";
 }
 
+// * make all arrays of students (prep to display count)
 function countStudents(allCleanStudents) {
   // TODO make arrays for each houses
   const allGryffindorArray = allCleanStudents.filter((student) => student.house.toLowerCase().includes("gryffindor"));
@@ -307,6 +310,7 @@ function countStudents(allCleanStudents) {
   displayStudentCounts(allGryffindorArray, allSlytherinArray, allRavenclawArray, allHufflepuffArray);
 }
 
+// * display counted arrays of students
 function displayStudentCounts(allGryffindorArray, allSlytherinArray, allRavenclawArray, allHufflepuffArray) {
   // Todo display total count
   document.getElementById("count_total").textContent = `${allCleanStudents.length} students in total`;
@@ -321,3 +325,34 @@ function displayStudentCounts(allGryffindorArray, allSlytherinArray, allRavencla
   // todo display all expelled
   // todo display all purebloods
 }
+
+
+// TODOs 
+
+// * filter 
+
+// * sort
+
+// * make prefects - remove prefects (visible with icon)
+
+// * stop adding more than 2 prefects of each houses 
+
+// * display popup prefects
+
+// * expel students - definitive Make some styling change to show they are expelled (maybe all grey box ?)
+
+// * make squad - remove squad (visible with icon)
+
+// * display notification popup when onf of these 3 actions are performed - woth student info
+
+// * fetch blood status data
+
+// * compare blood data and make 3 arrays
+
+// * SEARCHING feature !!!!!
+
+// ** add all of those new arrays to countStudents()
+
+// * display all those new arrays --- remember also display the current number of displayed
+
+// !!!!!* function hackedHogwarts() and everything that has to happen (look at diagrams)
