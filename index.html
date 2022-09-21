@@ -33,37 +33,37 @@
         <input id="search_bar" name="search_bar" type="text" placeholder="Search here">
         <div id="filtering_bar">
           <h3>Filter by:</h3>
-          <button filter-value="all" data-filter="all">Show all</button>
+          <button filter-value="all" data-action="filter" data-filter="all">Show all</button>
           <div id="filter_house">
             <h4>House</h4>
-            <button filter-value="gryffindor" data-filter="house">Gryffindor</button>
-            <button filter-value="slytherin" data-filter="house">Slythering</button>
-            <button filter-value="ravenclaw" data-filter="house">Ravenclaw</button>
-            <button filter-value="hufflepuff" data-filter="house">Hufflepuff</button>
+            <button data-value="Gryffindor" data-action="filter">Gryffindor</button>
+            <button data-value="Slytherin" data-action="filter">Slytherin</button>
+            <button data-value="Ravenclaw" data-action="filter">Ravenclaw</button>
+            <button data-value="Hufflepuff" data-action="filter">Hufflepuff</button>
           </div>
           <div id="filter_blood">
             <h4>Blood status</h4>
-            <button filter-value="pure" data-filter="blood">All pure bloods</button>
-            <button filter-value="half" data-filter="blood">All half bloods</button>
-            <button filter-value="muggle" data-filter="blood">All muggles</button>
+            <button data-value="pure" data-action="filter">All pure bloods</button>
+            <button data-value="half" data-action="filter">All half bloods</button>
+            <button data-value="muggle" data-action="filter">All muggles</button>
           </div>
           <div id="filter_gender">
             <h4>Gender</h4>
-            <button filter-value="girl" data-filter="gender">All girl students</button>
-            <button filter-value="boy" data-filter="gender">All boy students</button>
+            <button data-value="Girl" data-action="filter">All girl students</button>
+            <button data-value="Boy" data-action="filter">All boy students</button>
           </div>
           <div id="filter_lists">
             <h4>Lists</h4>
-            <button filter-value="squad" data-filter="squad" data-filter-value="true" id="squad_list">Show Squad list</button>
-            <button filter-value="prefect" data-filter="prefect" data-filter-value="true" id="prefects_list">Show Prefects</button>
-            <button filter-value="expelled" data-filter="expelled" data-filter-value="true" id="expelled_list">Show expelled students</button></div>
+            <button data-value="squad" data-action="filter" data-filter-value="true" id="squad_list">Show Squad list</button>
+            <button data-value="prefect" data-action="filter" data-filter-value="true" id="prefects_list">Show Prefects</button>
+            <button data-value="expelled" data-action="filter" data-filter-value="true" id="expelled_list">Show expelled students</button></div>
         </div>
         <div id="sorting_bar">
           <h3>Sort by:</h3>
-          <button class="sort_btn" data-sort="firstName" data-dir="asc">First Names</button>
-          <button class="sort_btn" data-sort="lastName" data-dir="asc">Last Names</button>
-          <button class="sort_btn" data-sort="house" data-dir="asc">Houses</button>
-          <button class="sort_btn" data-sort="gender" data-dir="asc">Gender</button>
+          <button class="sort_btn" data-action="sort" data-sort="firstName" data-dir="asc">First Names</button>
+          <button class="sort_btn" data-action="sort"  data-sort="lastName" data-dir="asc">Last Names</button>
+          <button class="sort_btn" data-action="sort"  data-sort="house" data-dir="asc">Houses</button>
+          <button class="sort_btn" data-action="sort"  data-sort="gender" data-dir="asc">Gender</button>
         </div>
 
       </section> 
@@ -105,7 +105,7 @@
             <p id="count_expelled">X expelled students</p></div>
           <div>
             <h3>Actually displayed</h3>
-            <p id="count_expelled">X displayed students</p></div>
+            <p id="count_displayed">X displayed students</p></div>
           <div>
             <h3>Inquisitorial</h3>
             <p id="count_squad">X in squad</p></div>
@@ -151,6 +151,7 @@
               <div data-field="nickName">Nick Name</div>
               <div data-field="bloodStatus">Blood Status</div>
               <div data-field="gender">Gender</div>
+              <div data-field="expelled">expelled yes / no</div>
             </div>
           </div>
           <div class="secondary">
