@@ -279,6 +279,7 @@ button {
   border: solid 1px gold;
   padding: 10px;
   border-radius: 25px;
+  margin-bottom: 5px;
 }
 
 input {

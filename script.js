@@ -399,6 +399,7 @@ function makeCurrentList() {
 
   console.log("settings.filterBy", settings.filterBy);
   console.log(sortedList);
+
   displayList(sortedList);
 }
 
@@ -523,17 +524,17 @@ function displayStudentModal(student) {
     studentModal.querySelector("[data-field=expelled]").style.fontSize = "2rem";
   }
 
-  // // put expelled student into exppeled array and update attendign array
-  // // TODO Hoooooooooooow to keep the data and update along the way SHIT aaaaaaaaaaaaaah
-  // if (student.expelled === true) {
-  //   attendingStudents = allStudents;
-  //   expelledStudents = allStudents.splice(student.indexOf, 1);
-  //   console.log(expelledStudents);
-  //   console.log(allStudents);
-  // }
-
   //  TODO : button to prefect
   //  TODO : button to squad
 }
 
 // todo hack
+
+
+
+
+
+
+
+
+// TODO display counted arrays in display list i think ?? think about it
