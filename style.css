@@ -273,3 +273,29 @@ footer a {
 #counting_bar div {
   padding-bottom: 20px;
 }
+
+button {
+  background-color: goldenrod;
+  border: solid 1px gold;
+  padding: 10px;
+  border-radius: 25px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 25px;
+  color: brown;
+}
+
+.sortby,
+.filterby {
+  background-color: brown;
+}
+
+#sorting_bar button[data-dir="asc"]::after {
+  content: "↓";
+}
+
+#sorting_bar button[data-dir="desc"]::after {
+  content: "↑";
+}

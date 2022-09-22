@@ -8,8 +8,7 @@ let attendingStudents = [];
 
 const settings = {
   filterBy: "all",
-  // filterValue: "all",
-  sortBy: "",
+  sortBy: "firstName",
   sortDir: "asc",
   search: "",
 };
@@ -18,7 +17,7 @@ const Student = {
   prefect: false,
   attending: true,
   expelled: false,
-  squad: false, 
+  squad: false,
   firstName: "",
   nickName: "",
   middelName: "",
@@ -226,17 +225,23 @@ function cleanData(elm) {
   return student;
 }
 
-// FILTER
+// TODO FILTER
 
 function selectFilter(event) {
   const filter = event.target.dataset.value;
-  console.log(`user selected ${filter}`);
-  setFilter(filter);
-}
+  // console.log(`user selected ${filter}`);
 
-function setFilter(filter) {
+  //TODO find old sort elm
+  const oldFiltElm = document.querySelector(`[data-value='${settings.filterBy}']`);
+  console.log(`oldFiltElm`, oldFiltElm);
+  // TODO unstyle it
+  oldFiltElm.classList.remove("filterby");
+
+  // todo style active elm
+  event.target.classList.add("filterby");
+  console.log(`event target`, event.target);
+
   settings.filterBy = filter;
-  console.log("settings.filterBy", settings.filterBy);
   makeCurrentList();
 }
 
@@ -269,7 +274,7 @@ function filterList(filteredList) {
     filteredList = allStudents.filter(isSquad);
   } else if (settings.filterBy === "pure") {
     //create a filtered list of only pure
-    filteredList = allStudents.filter(is);
+    filteredList = allStudents.filter(isPure);
   } else if (settings.filterBy === "half") {
     //create a filtered list of only half
     filteredList = allStudents.filter(isHalf);
@@ -327,14 +332,63 @@ function isGirl(student) {
   return student.gender === "Girl";
 }
 
-// TODO Sort
+// TODO SORT
 
-function setSort() {
-  // it is currently 1.29 am and have been working on this since 19.30
-  console.log(`Now i go to bed`)
+function selectSort(event) {
+  const sort = event.target.dataset.sort;
+  const sortDir = event.target.dataset.dir;
+
+  console.log(sort, sortDir);
+
+  if (sortDir === "asc") {
+    event.target.dataset.dir = "desc";
+  } else {
+    event.target.dataset.dir = "asc";
+  }
+
+  //TODO find old sort elm
+  const oldSortElm = document.querySelector(`[data-sort='${settings.sortBy}']`);
+  console.log(`oldSOrtElm`, oldSortElm);
+  console.log(`settings.sortBy`, settings.sortBy);
+
+  // TODO unstyle it
+  oldSortElm.classList.remove("sortby");
+
+  // TODO style chosen elm
+  event.target.classList.add("sortby");
+
+  settings.sortBy = sort;
+  settings.sortDir = sortDir;
+
+  makeCurrentList();
+  //setSort(sort, sortDir);
 }
 
+function setSort(sort, sortDir) {
+  console.log(`setSort`);
+}
 
+function sortList(sortedList) {
+  // to sort both directions
+  let dir = 1;
+  if (settings.sortDir === "desc") {
+    dir = -1;
+  } else {
+    settings.dir = 1;
+  }
+
+  sortedList = sortedList.sort(sortByProperty);
+
+  function sortByProperty(studentA, studentB) {
+    if (studentA[settings.sortBy] < studentB[settings.sortBy]) {
+      return -1 * dir;
+    } else {
+      return 1 * dir;
+    }
+  }
+
+  return sortedList;
+}
 
 //get a list that both filters and sorts
 function makeCurrentList() {
@@ -388,6 +442,13 @@ function displayStudent(student) {
     clone.querySelector(".single_student").style.backgroundColor = "#222f5b";
     clone.querySelector(".single_student").style.color = "#946b2d";
     clone.querySelector("[data-field=fullName]").style.color = "#946b2d";
+  }
+
+  // TODO background color if expelled
+  if (student.expelled === true) {
+    clone.querySelector(".single_student").style.backgroundColor = "#333333";
+    clone.querySelector(".single_student").style.color = "#aaaaaa";
+    clone.querySelector("[data-field=fullName]").style.color = "#aaaaaa";
   }
 
   // TODO clone prefect and add greyscale if false
