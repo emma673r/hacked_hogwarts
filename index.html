@@ -33,7 +33,14 @@
         <input id="search_bar" name="search_bar" type="text" placeholder="Search here">
         <div id="filtering_bar">
           <h3>Filter by:</h3>
-          <button data-value="all" data-action="filter" data-filter="all">Show all</button>
+
+          <div id="filter_lists">
+            <!-- <h4>Lists</h4> -->
+            <button data-value="all" data-action="filter" data-filter="all">Show all</button>
+            <button data-value="attending" data-action="filter" data-filter="attending">Show attending students</button>
+            <button data-value="squad" data-action="filter" data-filter-value="true" id="squad_list">Show Squad list</button>
+            <button data-value="prefect" data-action="filter" data-filter-value="true" id="prefects_list">Show Prefects</button>
+            <button data-value="expelled" data-action="filter" data-filter-value="true" id="expelled_list">Show expelled students</button></div>
           <div id="filter_house">
             <h4>House</h4>
             <button data-value="Gryffindor" data-action="filter">Gryffindor</button>
@@ -52,11 +59,7 @@
             <button data-value="Girl" data-action="filter">All girl students</button>
             <button data-value="Boy" data-action="filter">All boy students</button>
           </div>
-          <div id="filter_lists">
-            <h4>Lists</h4>
-            <button data-value="squad" data-action="filter" data-filter-value="true" id="squad_list">Show Squad list</button>
-            <button data-value="prefect" data-action="filter" data-filter-value="true" id="prefects_list">Show Prefects</button>
-            <button data-value="expelled" data-action="filter" data-filter-value="true" id="expelled_list">Show expelled students</button></div>
+
         </div>
         <div id="sorting_bar">
           <h3>Sort by:</h3>
@@ -84,6 +87,9 @@
           <div>
             <h3 id="count_total">In total</h3>
           </div>
+          <div>
+            <h3 id="count_displayed">Actually displayed</h3>
+          </div>
           <div class="crest_h3">
             <img class="count_crest" src="images/house/gryffindor.png" alt="gryffindor crest">
             <h3 id="count_gry">Gryffindor</h3>
@@ -103,9 +109,6 @@
           <div>
             <h3>Expelled</h3>
             <p id="count_expelled">X expelled students</p></div>
-          <div>
-            <h3>Actually displayed</h3>
-            <p id="count_displayed">X displayed students</p></div>
           <div>
             <h3>Inquisitorial</h3>
             <p id="count_squad">X in squad</p></div>

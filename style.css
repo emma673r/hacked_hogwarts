@@ -270,9 +270,9 @@ footer a {
   text-decoration: none;
 }
 
-#counting_bar div {
+/* #counting_bar div {
   padding-bottom: 20px;
-}
+} */
 
 button {
   background-color: goldenrod;

@@ -3,8 +3,7 @@
 window.addEventListener("DOMContentLoaded", displayLogin);
 
 let allStudents = [];
-let expelledStudents = [];
-let attendingStudents = [];
+let searchStudentList = [];
 
 const settings = {
   filterBy: "all",
@@ -62,8 +61,26 @@ function registerBtn() {
   document.querySelector("#search_bar").addEventListener("input", searchInput);
 }
 
-function searchInput() {
+// todo input search function
+
+function searchInput(evt) {
   console.log(`searchInput`);
+  //? if input value = firstname includes input or includes lastname ? then filter to show only them in display list
+
+  let searchStudentList = allStudents.filter((student) => {
+    let searchInput = evt.target.value;
+    searchInput = searchInput.trim();
+
+    // console.log(`searchInput is _${searchInput}_`);
+
+    return student.firstName.toLowerCase().includes(searchInput);
+  });
+
+  // console.log(searchStudentList)
+
+  // todo display actual number of displayed students here
+  displayDisplayedCount(searchStudentList);
+  displayList(searchStudentList);
 }
 
 // fetch data students
@@ -80,7 +97,11 @@ async function fetchData() {
 function prepareData(list) {
   allStudents = list.map(cleanData);
   //   console.log(`allStudents is `, allStudents);
-  // makeCurrentList();
+
+  // todo display count students
+  displayDisplayedCount(allStudents);
+  displayHouseCount(allStudents);
+
   displayList(allStudents);
 }
 
@@ -393,14 +414,58 @@ function sortList(sortedList) {
 //get a list that both filters and sorts
 function makeCurrentList() {
   console.log(`hello`);
-
   const currentList = filterList(allStudents);
   const sortedList = sortList(currentList);
 
-  console.log("settings.filterBy", settings.filterBy);
-  console.log(sortedList);
-
+  displayDisplayedCount(sortedList);
   displayList(sortedList);
+}
+
+function displayTotalCount(list) {
+  let expelledStudents = [];
+  let attendingStudents = [];
+
+  list.forEach((student) => {
+    if (student.expelled === true) {
+      expelledStudents.push(student);
+    } else if (student.expelled === false) {
+      attendingStudents.push(student);
+    }
+  });
+
+  console.log(`expelledStudents is`, expelledStudents);
+  console.log(`attendingStudents is `, attendingStudents);
+
+  document.querySelector("#count_total").textContent = `${attendingStudents.length} students attending school`;
+  document.querySelector("#count_expelled").innerHTML = `<b>${expelledStudents.length}</b> expelled students`;
+}
+
+function displayHouseCount(list) {
+  let gryCount = [];
+  let slyCount = [];
+  let hufCount = [];
+  let ravCount = [];
+
+  list.forEach((student) => {
+    if (student.house === "Gryffindor") {
+      gryCount.push(student);
+    } else if (student.house === "Slytherin") {
+      slyCount.push(student);
+    } else if (student.house === "Hufflepuff") {
+      hufCount.push(student);
+    } else if (student.house === "Ravenclaw") {
+      ravCount.push(student);
+    }
+  });
+
+  document.querySelector("#count_gry").textContent = `${gryCount.length} Gryffindor students`;
+  document.querySelector("#count_sly").textContent = `${slyCount.length} Slytherin students`;
+  document.querySelector("#count_huf").textContent = `${hufCount.length} Hufflepuff students`;
+  document.querySelector("#count_rav").textContent = `${ravCount.length} Ravenclaw students`;
+}
+
+function displayDisplayedCount(list) {
+  document.querySelector("#count_displayed").textContent = `${list.length} displayed students`;
 }
 
 function displayList(students) {
@@ -409,6 +474,8 @@ function displayList(students) {
 
   // build a new list
   students.forEach(displayStudent);
+
+  displayTotalCount(students);
 }
 
 //clone to main site
@@ -529,12 +596,5 @@ function displayStudentModal(student) {
 }
 
 // todo hack
-
-
-
-
-
-
-
 
 // TODO display counted arrays in display list i think ?? think about it
