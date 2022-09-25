@@ -64,7 +64,7 @@ function registerBtn() {
 // todo input search function
 
 function searchInput(evt) {
-  console.log(`searchInput`);
+  // console.log(`searchInput`);
   //? if input value = firstname includes input or includes lastname ? then filter to show only them in display list
 
   let searchStudentList = allStudents.filter((student) => {
@@ -78,8 +78,6 @@ function searchInput(evt) {
 
   // console.log(searchStudentList)
 
-  // todo display actual number of displayed students here
-  displayDisplayedCount(searchStudentList);
   displayList(searchStudentList);
 }
 
@@ -99,8 +97,9 @@ function prepareData(list) {
   //   console.log(`allStudents is `, allStudents);
 
   // todo display count students
+
+  displayCounts(allStudents);
   displayDisplayedCount(allStudents);
-  displayHouseCount(allStudents);
 
   displayList(allStudents);
 }
@@ -254,13 +253,13 @@ function selectFilter(event) {
 
   //TODO find old sort elm
   const oldFiltElm = document.querySelector(`[data-value='${settings.filterBy}']`);
-  console.log(`oldFiltElm`, oldFiltElm);
+  // console.log(`oldFiltElm`, oldFiltElm);
   // TODO unstyle it
   oldFiltElm.classList.remove("filterby");
 
   // todo style active elm
   event.target.classList.add("filterby");
-  console.log(`event target`, event.target);
+  // console.log(`event target`, event.target);
 
   settings.filterBy = filter;
   makeCurrentList();
@@ -329,7 +328,7 @@ function isExpelled(student) {
   return student.expelled === true;
 }
 function isAttending(student) {
-  return student.expelled === false;
+  return student.attending === true;
 }
 function isPrefect(student) {
   return student.prefect === true;
@@ -359,7 +358,7 @@ function selectSort(event) {
   const sort = event.target.dataset.sort;
   const sortDir = event.target.dataset.dir;
 
-  console.log(sort, sortDir);
+  // console.log(sort, sortDir);
 
   if (sortDir === "asc") {
     event.target.dataset.dir = "desc";
@@ -369,8 +368,8 @@ function selectSort(event) {
 
   //TODO find old sort elm
   const oldSortElm = document.querySelector(`[data-sort='${settings.sortBy}']`);
-  console.log(`oldSOrtElm`, oldSortElm);
-  console.log(`settings.sortBy`, settings.sortBy);
+  // console.log(`oldSOrtElm`, oldSortElm);
+  // console.log(`settings.sortBy`, settings.sortBy);
 
   // TODO unstyle it
   oldSortElm.classList.remove("sortby");
@@ -382,11 +381,6 @@ function selectSort(event) {
   settings.sortDir = sortDir;
 
   makeCurrentList();
-  //setSort(sort, sortDir);
-}
-
-function setSort(sort, sortDir) {
-  console.log(`setSort`);
 }
 
 function sortList(sortedList) {
@@ -413,59 +407,77 @@ function sortList(sortedList) {
 
 //get a list that both filters and sorts
 function makeCurrentList() {
-  console.log(`hello`);
+  console.log(`makeCurrentList`);
   const currentList = filterList(allStudents);
   const sortedList = sortList(currentList);
 
   displayDisplayedCount(sortedList);
+  displayCounts(allStudents);
+
   displayList(sortedList);
 }
 
-function displayTotalCount(list) {
-  let expelledStudents = [];
-  let attendingStudents = [];
+// function displayTotalCount(list) {
+//   let expelledStudents = [];
+//   let attendingStudents = [];
 
-  list.forEach((student) => {
-    if (student.expelled === true) {
-      expelledStudents.push(student);
-    } else if (student.expelled === false) {
-      attendingStudents.push(student);
-    }
-  });
+//   list.forEach((student) => {
+//     if (student.expelled == true && student.attending == false) {
+//       expelledStudents.push(student);
 
-  console.log(`expelledStudents is`, expelledStudents);
-  console.log(`attendingStudents is `, attendingStudents);
+//     } else if (student.expelled == false && student.attending == true) {
+//       attendingStudents.push(student);
+//     }
+//   });
 
-  document.querySelector("#count_total").textContent = `${attendingStudents.length} students attending school`;
-  document.querySelector("#count_expelled").innerHTML = `<b>${expelledStudents.length}</b> expelled students`;
-}
+//   console.log(`expelledStudents is`, expelledStudents);
+//   console.log(`attendingStudents is `, attendingStudents);
 
-function displayHouseCount(list) {
-  let gryCount = [];
-  let slyCount = [];
-  let hufCount = [];
-  let ravCount = [];
+//   document.querySelector("#count_total").textContent = `${attendingStudents.length} students attending school`;
+//   document.querySelector("#count_expelled").innerHTML = `<b>${expelledStudents.length}</b> expelled students`;
+// }
+// function displayTotalCount(list) {
+//   list = list.filter(isExpelled);
+//   console.log(`here`,list)
+// }
 
-  list.forEach((student) => {
-    if (student.house === "Gryffindor") {
-      gryCount.push(student);
-    } else if (student.house === "Slytherin") {
-      slyCount.push(student);
-    } else if (student.house === "Hufflepuff") {
-      hufCount.push(student);
-    } else if (student.house === "Ravenclaw") {
-      ravCount.push(student);
-    }
-  });
+function displayCounts(list) {
 
-  document.querySelector("#count_gry").textContent = `${gryCount.length} Gryffindor students`;
-  document.querySelector("#count_sly").textContent = `${slyCount.length} Slytherin students`;
-  document.querySelector("#count_huf").textContent = `${hufCount.length} Hufflepuff students`;
-  document.querySelector("#count_rav").textContent = `${ravCount.length} Ravenclaw students`;
+  console.log(list)
+
+
+  // start count list
+  let startList = allStudents.length;
+  document.querySelector("#count_start").innerHTML = `The year started with <b>${startList}</b> students`;
+
+
+  // expelled list
+  let expelledList = list.filter(isExpelled);
+  document.querySelector("#count_expelled").innerHTML = `<b>${expelledList.length}</b> students are expelled`;
+  // attending list
+  let attendingList = list.filter(isAttending).length;
+  document.querySelector("#count_attending").innerHTML = `<b>${attendingList}</b> students are attending`;
+  // houses list
+  let gryList = list.filter(isGryffindor).length;
+  let slyList = list.filter(isSlytherin).length;
+  let ravList = list.filter(isRavenclaw).length;
+  let hufList = list.filter(isHufflePuff).length;
+
+  document.querySelector("#count_gry").textContent = `${gryList} Gryffindor students`;
+  document.querySelector("#count_sly").textContent = `${slyList} Slytherin students`;
+  document.querySelector("#count_rav").textContent = `${ravList} Hufflepuff students`;
+  document.querySelector("#count_huf").textContent = `${hufList} Ravenclaw students`;
+
+  // squad list
+
+  let squadList = list.filter(isSquad).length;
+    document.querySelector("#count_squad").textContent = `${squadList} students in the squad`;
+  // pure blood list
 }
 
 function displayDisplayedCount(list) {
-  document.querySelector("#count_displayed").textContent = `${list.length} displayed students`;
+  let displayList = list.length;
+  document.querySelector("#count_displayed").textContent = `${displayList} displayed students`;
 }
 
 function displayList(students) {
@@ -475,7 +487,7 @@ function displayList(students) {
   // build a new list
   students.forEach(displayStudent);
 
-  displayTotalCount(students);
+  displayDisplayedCount(students);
 }
 
 //clone to main site
@@ -520,10 +532,12 @@ function displayStudent(student) {
   }
 
   // TODO clone prefect and add greyscale if false
+
   clone.querySelector("[data-field=prefect]").dataset.prefect = student.prefect;
   if (student.prefect === false) {
     clone.querySelector(`[data-field="prefect"]`).style.filter = "grayscale(100%)";
   }
+
   // TODO clone squad and add greyscale if false
   clone.querySelector("[data-field=squad]").dataset.squad = student.squad;
   if (student.squad === false) {
@@ -538,9 +552,9 @@ function displayStudent(student) {
 
 // * display single students extra info modal
 function displayStudentModal(student) {
-  //   console.log(`Hello`);
+  //   console.log(`displayStudentModal`);
   studentModal.style.display = "block";
-  document.querySelector(".close").addEventListener("click", () => {
+  studentModal.querySelector(".close").addEventListener("click", () => {
     studentModal.style.display = "none";
   });
 
@@ -556,10 +570,11 @@ function displayStudentModal(student) {
 
   studentModal.querySelector(`[data-field="imgHouseSrc"]`).src = `/images/house/${student.house.toLowerCase()}.png`;
   studentModal.querySelector(`[data-field="imgHouseSrc"]`).alt = `${student.house}`;
+
   studentModal.querySelector(`[data-field="squad"]`).src = `/images/assets/squad.png`;
   studentModal.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
+
   studentModal.querySelector(`[data-field="prefect"]`).src = `/images/assets/prefect.png`;
-  studentModal.querySelector(`[data-field="prefect"]`).style.filter = "grayscale(100%)";
 
   //  TODO : button to expell
 
@@ -575,7 +590,7 @@ function displayStudentModal(student) {
       student.squad = false;
       student.attending = false;
 
-      console.log(student.expelled);
+      // console.log(student.expelled);
       makeCurrentList();
       return student;
     }
@@ -592,7 +607,64 @@ function displayStudentModal(student) {
   }
 
   //  TODO : button to prefect
+
+  studentModal.querySelector("[data-field=prefect]").dataset.prefect = student.prefect;
+  studentModal.querySelector("[data-field=makePrefect]").addEventListener("click", clickPrefect);
+
+  console.log(`before `, student.prefect);
+  function clickPrefect(btn) {
+    removeEvtListener();
+
+    if (student.prefect == false) {
+      console.log("it was false and is now true");
+      student.prefect = true;
+
+      studentModal.querySelector(`[data-field="prefect"]`).style.filter = "none";
+      studentModal.style.display = "none";
+    } else {
+      console.log("it was true and is now false");
+
+      student.prefect = false;
+      studentModal.style.display = "none";
+    }
+    makeCurrentList();
+    return student;
+  }
+
+  if (student.prefect == false) {
+    studentModal.querySelector(`[data-field="prefect"]`).style.filter = "grayscale(100%)";
+    studentModal.querySelector("[data-field=makePrefect]").textContent = "Make Prefect";
+  } else {
+    studentModal.querySelector("[data-field=makePrefect]").textContent = "Remove Prefect";
+  }
+
+  console.log(student.attending == true);
+
   //  TODO : button to squad
+
+  // if (student.squadMember === true) {
+  //   document.querySelector("[data-field=squadMember]").textContent = "yes";
+  // } else {
+  //   document.querySelector("[data-field=squadMember]").textContent = "no";
+  // }
+  // document.querySelector("[data-field=squadMember]").addEventListener("click", clickSquadMember);
+
+  // function clickSquadMember() {
+  //   if (student.squadMember === true) {
+  //     student.squadMember = false;
+  //   } else {
+  //     tryToMakeASquadMember(student);
+  //   }
+  //   makeCurrentList();
+  // }
+
+  function removeEvtListener() {
+    studentModal.querySelector("[data-field=prefect]").removeEventListener("click", clickPrefect);
+    studentModal.querySelector("[data-field = makePrefect]").removeEventListener("click", clickPrefect);
+
+    // document.querySelector("[data-field=squad]").removeEventListener("click", clickSquad);
+    // document.querySelector("#makeSquad").removeEventListener("click", clickSquad);
+  }
 }
 
 // todo hack
