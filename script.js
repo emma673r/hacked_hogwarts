@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", displayLogin);
 
 let allStudents = [];
 let searchStudentList = [];
+let pureStudents = [];
 
 const settings = {
   filterBy: "all",
@@ -27,11 +28,10 @@ const Student = {
   blood: "",
 };
 
-// let showNumberOfStudent = document.querySelector(".howmanystudents");
-
 const studentList = document.getElementById("student_list");
 const template = document.getElementById("student");
 const studentModal = document.getElementById("student_modal");
+const notification = document.getElementById("notification");
 
 const urlList = "https://petlatkea.dk/2021/hogwarts/students.json";
 const urlBlood = "https://petlatkea.dk/2021/hogwarts/families.json";
@@ -39,6 +39,8 @@ const urlBlood = "https://petlatkea.dk/2021/hogwarts/families.json";
 // joke login screen here
 function displayLogin() {
   studentModal.style.display = "none";
+  notification.style.display = "none";
+
   document.querySelector(".login_1").addEventListener("click", start);
   document.querySelector(".login_2").addEventListener("click", start);
 }
@@ -409,6 +411,7 @@ function sortList(sortedList) {
 function makeCurrentList() {
   console.log(`makeCurrentList`);
   const currentList = filterList(allStudents);
+
   const sortedList = sortList(currentList);
 
   displayDisplayedCount(sortedList);
@@ -468,8 +471,12 @@ function displayCounts(list) {
   // squad list
 
   let squadList = list.filter(isSquad).length;
-  document.querySelector("#count_squad").textContent = `${squadList} students in the squad`;
+  document.querySelector("#count_squad").innerHTML = `<b>${squadList}</b> students in the squad`;
+
   // pure blood list
+  // !is only displayed when some kind of filtering is clicked
+  let pureList = allStudents.filter(isPure).length;
+  document.querySelector("#count_pure").innerHTML = `<b>${pureList}</b> pure bloods`;
 }
 
 function displayDisplayedCount(list) {
@@ -581,21 +588,24 @@ function displayStudentModal(student) {
     if (student.expelled === false) {
       studentModal.style.display = "none";
       student.expelled = true;
+      // notidy student is expelled
       student.prefect = false;
+      // sotiofy student is no longer prefect
       student.squad = false;
+      // notify student is no longer squad
       student.attending = false;
+      // notify student is no longer attending
+      notification.style.display = "block";
+      notification.innerHTML = `${student.firstName} is now expelled. <br> This means their eventual squad or prefect status is now also revoked.<br> They will no longer be attending Hogwarts.`;
+      setTimeout(closeNotification, 2000);
 
-      // todo remove actions for expelled students
-
-      removeEvtListener();
-      studentModal.querySelector(".actions").style.display = "none";
       // console.log(student.expelled);
       makeCurrentList();
       return student;
     }
   }
 
-  if (student.expelled === false) {
+  if (student.expelled == false) {
     studentModal.querySelector("[data-field=expelled]").textContent = "Attending";
   } else {
     studentModal.querySelector("[data-field=expel]").removeEventListener("click", clickExpel);
@@ -604,6 +614,12 @@ function displayStudentModal(student) {
     studentModal.querySelector("[data-field=expelled]").textContent = "EXPELLED";
     studentModal.querySelector("[data-field=expelled]").style.fontSize = "2rem";
   }
+
+  // if (student.expelled == true) {
+  //   // todo remove actions for expelled students
+  //   removeEvtListener();
+  //   studentModal.querySelector(".actions").style.display = "none";
+  // }
 
   //  TODO : button to prefect
 
@@ -621,8 +637,15 @@ function displayStudentModal(student) {
 
       studentModal.querySelector(`[data-field="prefect"]`).style.filter = "none";
       studentModal.style.display = "none";
+
+      // TODO onto the rules of being a prefect
+      tryToMakePrefect(student);
     } else {
       console.log("it was true and is now false");
+      // todo notify student is no longer prefect
+      notification.style.display = "block";
+      notification.textContent = `${student.firstName} is no longer a prefect`;
+      setTimeout(closeNotification, 2000);
 
       student.prefect = false;
       studentModal.style.display = "none";
@@ -643,15 +666,7 @@ function displayStudentModal(student) {
   studentModal.querySelector("[data-field=squad]").dataset.squad = student.squad;
   studentModal.querySelector("[data-field=makeSquad]").addEventListener("click", clickSquad);
 
-  console.log(student.squad);
-
-  // TODO if student blood is not pure and or if student not slytherin then cannot be a squad member
-  // !Change place at some point
-
-  if (!student.blood !== "Pureblood" || student.house !== "Slytherin") {
-    studentModal.querySelector("[data-field=makeSquad]").style.display = "none";
-    studentModal.querySelector("[data-field=makeSquad]").removeEventListener("click", clickSquad);
-  }
+  // console.log(student.squad);
 
   function clickSquad(btn) {
     removeEvtListener();
@@ -659,16 +674,16 @@ function displayStudentModal(student) {
     if (student.squad == true) {
       console.log(`was true and is now false`);
       student.squad = false;
-      student.prefect = false;
       studentModal.style.display = "none";
+      // todo notify student is no longer squad
+      notification.style.display = "block";
+      notification.textContent = `${student.firstName} is no longer a squad member`;
+      setTimeout(closeNotification, 2000);
     } else {
-      console.log(`was false and is now true`);
-      student.squad = true;
-      studentModal.querySelector(`[data-field="squad"]`).style.filter = "none";
+      console.log(`was false and is now  maybe true`);
       studentModal.style.display = "none";
-
       // TODO onto the rules of being a squadmember;
-      // tryToMakeASquadMember(student);
+      tryToMakeSquad(student);
     }
     makeCurrentList();
     return student;
@@ -688,6 +703,81 @@ function displayStudentModal(student) {
 
     document.querySelector("[data-field=squad]").removeEventListener("click", clickSquad);
     document.querySelector("[data-field = makeSquad]").removeEventListener("click", clickSquad);
+  }
+
+  function tryToMakePrefect(student) {
+    console.log(`TrytoMakePrfeect`);
+    // const prefects = allStudents.filter((student) => student.prefect);
+    // const other = prefects.filter((student) => student.house === selectedStudent.house);
+
+    // //if there is another of the same type
+    // if (other.length >= 2) {
+    //   console.log("there can only be two of each house");
+    //   removeAorB(other[0], other[1]);
+    // } else {
+    //   makePrefect(selectedStudent);
+    // }
+
+    // function removeAorB(prefectA, prefectB) {
+    //   //ask the user to ignore or remove a or b
+    //   document.querySelector("#warningbox_prefect").classList.remove("hide");
+    //   document.querySelector(".closebutton").addEventListener("click", closeDialog);
+    //   document.querySelector("#remove_a").addEventListener("click", clickRemoveA);
+    //   document.querySelector("#remove_b").addEventListener("click", clickRemoveB);
+
+    //   // show names on remove a or b button
+    //   document.querySelector("[data-field=prefectA]").textContent = prefectA.firstName;
+    //   document.querySelector("[data-field=prefectB]").textContent = prefectB.firstName;
+
+    //   //if ignore - do nothing
+    //   function closeDialog() {
+    //     document.querySelector("#warningbox_prefect").classList.add("hide");
+    //     document.querySelector(".closebutton").removeEventListener("click", closeDialog);
+    //     document.querySelector("#remove_a").removeEventListener("click", clickRemoveA);
+    //     document.querySelector("#remove_b").removeEventListener("click", clickRemoveB);
+    //   }
+    //   // if remove a
+    //   function clickRemoveA() {
+    //     removePrefect(prefectA);
+    //     makePrefect(selectedStudent);
+    //     makeCurrentList();
+    //     closeDialog();
+    //   }
+
+    //   //else if - removeB
+    //   function clickRemoveB() {
+    //     removePrefect(prefectB);
+    //     makePrefect(selectedStudent);
+    //     makeCurrentList();
+    //     closeDialog();
+    //   }
+    // }
+    // function removePrefect(prefectStudent) {
+    //   prefectStudent.prefect = false;
+    // }
+    // function makePrefect(student) {
+    //   student.prefect = true;
+    // }
+  }
+
+  function tryToMakeSquad(student) {
+    if (student.house === "Slytherin" && student.blood === "pure") {
+      student.squad = true;
+      // todo notify student is now squad
+      notification.style.display = "block";
+      notification.textContent = `${student.firstName} is now a squad member`;
+      setTimeout(closeNotification, 2000);
+      studentModal.querySelector(`[data-field="squad"]`).style.filter = "none";
+    } else {
+      // todo notify student is not allowed to be in squad
+      notification.style.display = "block";
+      notification.textContent = `${student.firstName} is not allowed to be a squad member`;
+      setTimeout(closeNotification, 2000);
+    }
+  }
+
+  function closeNotification() {
+    notification.style.display = "none";
   }
 }
 

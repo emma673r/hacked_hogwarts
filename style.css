@@ -270,9 +270,14 @@ footer a {
   text-decoration: none;
 }
 
-/* #counting_bar div {
-  padding-bottom: 20px;
-} */
+#notification {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  border: 2px double black;
+  background-color: white;
+  padding: 50px;
+}
 
 button {
   background-color: goldenrod;
