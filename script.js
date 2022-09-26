@@ -6,6 +6,8 @@ let allStudents = [];
 let searchStudentList = [];
 let pureStudents = [];
 
+let isHacked = false;
+
 const settings = {
   filterBy: "all",
   sortBy: "firstName",
@@ -36,6 +38,7 @@ const proceedPopup = document.getElementById("proceed");
 const proceedMessage = document.getElementById("message_proceed");
 const yesBtn = document.getElementById("yes_btn");
 const noBtn = document.getElementById("no_btn");
+const hackedPopup = document.getElementById("hacked_popup");
 
 const urlList = "https://petlatkea.dk/2021/hogwarts/students.json";
 const urlBlood = "https://petlatkea.dk/2021/hogwarts/families.json";
@@ -45,6 +48,7 @@ function displayLogin() {
   studentModal.style.display = "none";
   notification.style.display = "none";
   proceedPopup.style.display = "none";
+  hackedPopup.style.display = "none";
 
   document.querySelector(".login_1").addEventListener("click", start);
   document.querySelector(".login_2").addEventListener("click", start);
@@ -572,7 +576,8 @@ function displayStudentModal(student) {
   studentModal.querySelector("[data-field=imgSrc]").alt = `picture of ${student.lastName}, ${student.firstName}`;
   studentModal.querySelector("[data-field=fullName]").textContent = `${student.firstName} ${student.lastName}`;
   studentModal.querySelector("[data-field=middleName]").innerHTML = `<u>Middle Name</u> : ${student.middleName}`;
-  studentModal.querySelector("[data-field=nickName]").innerHTML = `<u>Nick Name</u> : ${student.NickName}`;
+  studentModal.querySelector("[data-field=nickName]").innerHTML = `<u>Nick Name</u> : ${student.nickName}`;
+  console.log(student.nickName);
   studentModal.querySelector("[data-field=gender]").innerHTML = `<u>Gender</u> : ${student.gender}`;
   // TODO add blood status
   studentModal.querySelector("[data-field=bloodStatus]").innerHTML = `<u>Blood Status</u> : ${student.blood}`;
@@ -590,23 +595,41 @@ function displayStudentModal(student) {
 
   function clickExpel() {
     // console.log(`clickExpel`);
-    if (student.expelled === false) {
-      studentModal.style.display = "none";
-      student.expelled = true;
-      // notidy student is expelled
-      student.prefect = false;
-      // sotiofy student is no longer prefect
-      student.squad = false;
-      // notify student is no longer squad
-      student.attending = false;
-      // notify student is no longer attending
-      notification.style.display = "block";
-      notification.innerHTML = `${student.firstName} is now expelled. <br> This means their eventual squad or prefect status is now also revoked.<br> They will no longer be attending Hogwarts.`;
-      setTimeout(closeNotification, 2000);
 
-      // console.log(student.expelled);
-      makeCurrentList();
-      return student;
+    proceedPopup.style.display = "block";
+    proceedMessage.textContent = `${student.firstName} is about to be expelled. This is irreversible.`;
+    yesBtn.addEventListener("click", yesExpel);
+    noBtn.addEventListener("click", noExpel);
+
+    function yesExpel() {
+      yesBtn.removeEventListener("click", yesExpel);
+      noBtn.removeEventListener("click", noExpel);
+
+      if (student.expelled === false) {
+        studentModal.style.display = "none";
+        student.expelled = true;
+        // notidy student is expelled
+        student.prefect = false;
+        // sotiofy student is no longer prefect
+        student.squad = false;
+        // notify student is no longer squad
+        student.attending = false;
+        // notify student is no longer attending
+        notification.style.display = "block";
+        notification.innerHTML = `${student.firstName} is now expelled. <br> This means their eventual squad or prefect status is now also revoked.<br> They will no longer be attending Hogwarts.`;
+        setTimeout(closeNotification, 2000);
+
+        proceedPopup.style.display = "none";
+        // console.log(student.expelled);
+        makeCurrentList();
+        return student;
+      }
+    }
+
+    function noExpel() {
+      student.expelled = false;
+      proceedPopup.style.display = "none";
+      studentModal.style.display = "none";
     }
   }
 
@@ -877,3 +900,58 @@ function displayStudentModal(student) {
 }
 
 // todo hack
+
+function hackTheSystem() {
+  console.log(`hackTheSystem`);
+
+  //*** war plan
+  // make sure the hacking only is called once and is only removed when reload page
+  // todo call function that changes whole style (remember css file)
+  // call function to inject myself in the list
+  // todo call function hack bloods (purebloods have now a random blood status and all others have a pure blood status)
+  // todo make sure the expell popup on my student has two button that say no - as to not be able to expell me
+  // todo call function to remove all squad members -- notification to say it
+  // todo make sure new squad members get removed after random time out -- with notification
+
+  // ******
+
+  // todo only hack once
+  if (!isHacked) {
+    isHacked = true;
+    // !call all those functions in here
+
+    // todo popup to notify youve been hacked
+    // make in html
+    hackedPopup.style.display = "block";
+    hackedPopup.querySelector(".close").addEventListener("click", () => {
+      hackedPopup.style.display = "none";
+
+      //todo inject myself
+      injectMe();
+    });
+  }
+}
+
+// take harry potter test to get a house
+// im hufflepuff
+// is Anyone surprised?
+
+function injectMe() {
+  allStudents.push({
+    firstName: "Emma",
+    lastName: "Pasquer",
+    middleName: "No middle Name",
+    nickName: "HackEm'",
+    house: "hufflepuff",
+    blood: "Muggle",
+    gender: "Hacker",
+    prefect: false,
+    squad: false,
+    image: `/images/emma_p.png`,
+    attending: true,
+    expelled: false,
+  });
+
+  console.log(allStudents);
+  makeCurrentList();
+}

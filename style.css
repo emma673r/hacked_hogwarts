@@ -136,6 +136,29 @@ h2 {
   display: flex;
   flex-direction: column;
 }
+
+#proceed {
+  z-index: 500;
+}
+
+/***** STYLE this when you have chosen a hacking style !!! */
+
+#hacked_popup {
+  background-color: blue;
+  border: 10px double fuchsia;
+  padding: 30px;
+  position: fixed;
+  top: 20vh;
+  left: 30vw;
+  width: 50ch;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ******************************************************* */
+
+
+
 #proceed .wrapper {
   justify-content: space-around;
 }
