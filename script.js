@@ -442,14 +442,11 @@ function makeCurrentList() {
 // }
 
 function displayCounts(list) {
-
-  console.log(list)
-
+  // console.log(list);
 
   // start count list
   let startList = allStudents.length;
   document.querySelector("#count_start").innerHTML = `The year started with <b>${startList}</b> students`;
-
 
   // expelled list
   let expelledList = list.filter(isExpelled);
@@ -463,21 +460,21 @@ function displayCounts(list) {
   let ravList = list.filter(isRavenclaw).length;
   let hufList = list.filter(isHufflePuff).length;
 
-  document.querySelector("#count_gry").textContent = `${gryList} Gryffindor students`;
-  document.querySelector("#count_sly").textContent = `${slyList} Slytherin students`;
-  document.querySelector("#count_rav").textContent = `${ravList} Hufflepuff students`;
-  document.querySelector("#count_huf").textContent = `${hufList} Ravenclaw students`;
+  document.querySelector("#count_gry").innerHTML = `<b>${gryList}</b> Gryffindor students`;
+  document.querySelector("#count_sly").innerHTML = `<b>${slyList}</b> Slytherin students`;
+  document.querySelector("#count_rav").innerHTML = `<b>${ravList}</b> Hufflepuff students`;
+  document.querySelector("#count_huf").innerHTML = `<b>${hufList}</b> Ravenclaw students`;
 
   // squad list
 
   let squadList = list.filter(isSquad).length;
-    document.querySelector("#count_squad").textContent = `${squadList} students in the squad`;
+  document.querySelector("#count_squad").textContent = `${squadList} students in the squad`;
   // pure blood list
 }
 
 function displayDisplayedCount(list) {
   let displayList = list.length;
-  document.querySelector("#count_displayed").textContent = `${displayList} displayed students`;
+  document.querySelector("#count_displayed").innerHTML = `<b>${displayList}</b> displayed students`;
 }
 
 function displayList(students) {
@@ -534,13 +531,13 @@ function displayStudent(student) {
   // TODO clone prefect and add greyscale if false
 
   clone.querySelector("[data-field=prefect]").dataset.prefect = student.prefect;
-  if (student.prefect === false) {
+  if (student.prefect == false) {
     clone.querySelector(`[data-field="prefect"]`).style.filter = "grayscale(100%)";
   }
 
   // TODO clone squad and add greyscale if false
   clone.querySelector("[data-field=squad]").dataset.squad = student.squad;
-  if (student.squad === false) {
+  if (student.squad == false) {
     clone.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
   }
 
@@ -572,8 +569,6 @@ function displayStudentModal(student) {
   studentModal.querySelector(`[data-field="imgHouseSrc"]`).alt = `${student.house}`;
 
   studentModal.querySelector(`[data-field="squad"]`).src = `/images/assets/squad.png`;
-  studentModal.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
-
   studentModal.querySelector(`[data-field="prefect"]`).src = `/images/assets/prefect.png`;
 
   //  TODO : button to expell
@@ -590,6 +585,10 @@ function displayStudentModal(student) {
       student.squad = false;
       student.attending = false;
 
+      // todo remove actions for expelled students
+
+      removeEvtListener();
+      studentModal.querySelector(".actions").style.display = "none";
       // console.log(student.expelled);
       makeCurrentList();
       return student;
@@ -613,6 +612,7 @@ function displayStudentModal(student) {
 
   console.log(`before `, student.prefect);
   function clickPrefect(btn) {
+    console.log(`clickPrefect`);
     removeEvtListener();
 
     if (student.prefect == false) {
@@ -638,32 +638,56 @@ function displayStudentModal(student) {
     studentModal.querySelector("[data-field=makePrefect]").textContent = "Remove Prefect";
   }
 
-  console.log(student.attending == true);
-
   //  TODO : button to squad
 
-  // if (student.squadMember === true) {
-  //   document.querySelector("[data-field=squadMember]").textContent = "yes";
-  // } else {
-  //   document.querySelector("[data-field=squadMember]").textContent = "no";
-  // }
-  // document.querySelector("[data-field=squadMember]").addEventListener("click", clickSquadMember);
+  studentModal.querySelector("[data-field=squad]").dataset.squad = student.squad;
+  studentModal.querySelector("[data-field=makeSquad]").addEventListener("click", clickSquad);
 
-  // function clickSquadMember() {
-  //   if (student.squadMember === true) {
-  //     student.squadMember = false;
-  //   } else {
-  //     tryToMakeASquadMember(student);
-  //   }
-  //   makeCurrentList();
-  // }
+  console.log(student.squad);
 
+  // TODO if student blood is not pure and or if student not slytherin then cannot be a squad member
+  // !Change place at some point
+
+  if (!student.blood !== "Pureblood" || student.house !== "Slytherin") {
+    studentModal.querySelector("[data-field=makeSquad]").style.display = "none";
+    studentModal.querySelector("[data-field=makeSquad]").removeEventListener("click", clickSquad);
+  }
+
+  function clickSquad(btn) {
+    removeEvtListener();
+
+    if (student.squad == true) {
+      console.log(`was true and is now false`);
+      student.squad = false;
+      student.prefect = false;
+      studentModal.style.display = "none";
+    } else {
+      console.log(`was false and is now true`);
+      student.squad = true;
+      studentModal.querySelector(`[data-field="squad"]`).style.filter = "none";
+      studentModal.style.display = "none";
+
+      // TODO onto the rules of being a squadmember;
+      // tryToMakeASquadMember(student);
+    }
+    makeCurrentList();
+    return student;
+  }
+
+  if (student.squad == false) {
+    studentModal.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
+    studentModal.querySelector("[data-field=makeSquad]").textContent = "Make Squad";
+  } else {
+    studentModal.querySelector("[data-field=makeSquad]").textContent = "Remove Squad";
+  }
+
+  // function to remove event listeners
   function removeEvtListener() {
     studentModal.querySelector("[data-field=prefect]").removeEventListener("click", clickPrefect);
     studentModal.querySelector("[data-field = makePrefect]").removeEventListener("click", clickPrefect);
 
-    // document.querySelector("[data-field=squad]").removeEventListener("click", clickSquad);
-    // document.querySelector("#makeSquad").removeEventListener("click", clickSquad);
+    document.querySelector("[data-field=squad]").removeEventListener("click", clickSquad);
+    document.querySelector("[data-field = makeSquad]").removeEventListener("click", clickSquad);
   }
 }
 
