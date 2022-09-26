@@ -761,7 +761,10 @@ function displayStudentModal(student) {
     makeCurrentList();
   }
 
-  function squadTimeOut() {}
+  function squadTimeOut() {
+    console.log(`squadTimeout`);
+    
+  }
 
   if (student.squad == false) {
     studentModal.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
@@ -953,7 +956,7 @@ function hackTheSystem() {
   // call function to inject myself in the list
   // todo call function hack bloods (purebloods have now a random blood status and all others have a pure blood status)
   // make sure the expell popup on my student has two button that say no - as to not be able to expell me
-  // todo call function to remove all squad members -- notification to say it
+  // call function to remove all squad members -- notification to say it
   // todo make sure new squad members get removed after random time out -- with notification
 
   // ******
@@ -1069,15 +1072,15 @@ function getSecretKeystroke(event) {
 
   // ****** plan of attACK
 
-  // todo set a secret password
-  // todo get value for pressed key
-  // todo store pressed keys --- has to be outside of this function or else doesnt work
+  //  set a secret password
+  //  get value for pressed key
+  //  store pressed keys --- has to be outside of this function or else doesnt work
   // !!!only store them if they match the characters in the password (probably use charAt() ???)
-  // todo compare each new keystroke to next key in password
-  // todo maybe get index from password to use when comparing ?
-  // todo    if actual key match char at same index in password, add char to keystroke
-  // todo    else reset keystroke completely (start from 0)
-  // todo when the keystroke is === password call hackthesystem()
+  //  compare each new keystroke to next key in password
+  //  maybe get index from password to use when comparing ?
+  //     if actual key match char at same index in password, add char to keystroke
+  //     else reset keystroke completely (start from 0)
+  //  when the keystroke is === password call hackthesystem()
   // *******
 
   console.log(event.key);
