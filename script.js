@@ -6,6 +6,8 @@ let allStudents = [];
 let searchStudentList = [];
 let pureStudents = [];
 
+let random;
+
 let isHacked = false;
 let keystroke = "";
 
@@ -920,6 +922,8 @@ function displayStudentModal(student) {
     console.log(`tryMakeSquad`);
     if (isHacked) {
       console.log(`squadTimeout`);
+      random = Math.floor(Math.random() * 3);
+      console.log(`random is`, random);
 
       if (student.house === "Slytherin" && student.blood === "pure") {
         student.squad = true;
@@ -927,15 +931,16 @@ function displayStudentModal(student) {
         notification.style.display = "block";
         notification.textContent = `${student.firstName} is now a squad member`;
         setTimeout(closeNotification, 2000);
+
         if (student.squad == true) {
+          let times = [4000, 2000, 7000];
           setTimeout(() => {
             student.squad = false;
             // todo notify student is no longer squad
             notification.style.display = "block";
-            notification.textContent = `${student.firstName} is no longer a squad member`;
+            notification.textContent = `${student.firstName} no longer is a squad member`;
             setTimeout(closeNotification, 2000);
-          }, 3000);
-          makeCurrentList();
+          }, times[random]);
         }
       } else {
         // todo notify student is not allowed to be in squad
@@ -943,7 +948,7 @@ function displayStudentModal(student) {
         notification.textContent = `${student.firstName} is not allowed to be a squad member`;
         setTimeout(closeNotification, 2000);
       }
-      makeCurrentList();
+      // makeCurrentList();
     } else {
       if (student.house === "Slytherin" && student.blood === "pure") {
         student.squad = true;
@@ -958,7 +963,7 @@ function displayStudentModal(student) {
         notification.textContent = `${student.firstName} is not allowed to be a squad member`;
         setTimeout(closeNotification, 2000);
       }
-      makeCurrentList();
+      // makeCurrentList();
     }
   }
 }
@@ -976,7 +981,7 @@ function hackTheSystem() {
   // todo call function hack bloods (purebloods have now a random blood status and all others have a pure blood status)
   // make sure the expell popup on my student has two button that say no - as to not be able to expell me
   // call function to remove all squad members -- notification to say it
-  // todo make sure new squad members get removed after random time out -- with notification
+  // make sure new squad members get removed after random time -- with notification
 
   // ******
 
