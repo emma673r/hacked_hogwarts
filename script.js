@@ -518,27 +518,54 @@ function displayStudent(student) {
   clone.querySelector(`[data-field="imgHouseSrc"]`).src = `/images/house/${student.house.toLowerCase()}.png`;
   clone.querySelector(`[data-field="imgHouseSrc"]`).alt = `${student.house}`;
 
-  // TODO add background and text color to memebers of each house
-  if (student.house.toLowerCase() === "slytherin") {
-    clone.querySelector(".single_student").style.backgroundColor = "#1a472a";
-    clone.querySelector(".single_student").style.color = "#aaaaaa";
-    clone.querySelector("[data-field=fullName]").style.color = "#aaaaaa";
-  } else if (student.house.toLowerCase() === "gryffindor") {
-    clone.querySelector(".single_student").style.backgroundColor = "#740001";
-    clone.querySelector(".single_student").style.color = "goldenrod";
-    clone.querySelector("[data-field=fullName]").style.color = "goldenrod";
-  } else if (student.house.toLowerCase() === "hufflepuff") {
-    clone.querySelector(".single_student").style.backgroundColor = "#f0c75e";
-    clone.querySelector(".single_student").style.color = "#372e29";
-    clone.querySelector("[data-field=fullName]").style.color = "#372e29";
-  } else if (student.house.toLowerCase() === "ravenclaw") {
-    clone.querySelector(".single_student").style.backgroundColor = "#222f5b";
-    clone.querySelector(".single_student").style.color = "#946b2d";
-    clone.querySelector("[data-field=fullName]").style.color = "#946b2d";
+  // TODO add background and text color to members of each house
+
+  if (isHacked) {
+    if (student.house.toLowerCase() === "slytherin") {
+      clone.querySelector(".single_student").style.backgroundColor = "#39ff14";
+      clone.querySelector(".single_student").style.color = "black";
+      clone.querySelector("[data-field=fullName]").style.color = "black";
+
+      clone.querySe = "#39ff14";
+    } else if (student.house.toLowerCase() === "gryffindor") {
+      clone.querySelector(".single_student").style.backgroundColor = "#FF3131";
+      clone.querySelector(".single_student").style.color = "black";
+      clone.querySelector("[data-field=fullName]").style.color = "black";
+    } else if (student.house.toLowerCase() === "hufflepuff") {
+      clone.querySelector(".single_student").style.backgroundColor = "#FFF01F";
+      clone.querySelector(".single_student").style.color = "black";
+      clone.querySelector("[data-field=fullName]").style.color = "black";
+    } else if (student.house.toLowerCase() === "ravenclaw") {
+      clone.querySelector(".single_student").style.backgroundColor = "#1F51FF";
+      clone.querySelector(".single_student").style.color = "black";
+      clone.querySelector("[data-field=fullName]").style.color = "black";
+    }
+  } else {
+    if (student.house.toLowerCase() === "slytherin") {
+      clone.querySelector(".single_student").style.backgroundColor = "#1a472a";
+      clone.querySelector(".single_student").style.color = "#aaaaaa";
+      clone.querySelector("[data-field=fullName]").style.color = "#aaaaaa";
+    } else if (student.house.toLowerCase() === "gryffindor") {
+      clone.querySelector(".single_student").style.backgroundColor = "#740001";
+      clone.querySelector(".single_student").style.color = "goldenrod";
+      clone.querySelector("[data-field=fullName]").style.color = "goldenrod";
+    } else if (student.house.toLowerCase() === "hufflepuff") {
+      clone.querySelector(".single_student").style.backgroundColor = "#f0c75e";
+      clone.querySelector(".single_student").style.color = "#372e29";
+      clone.querySelector("[data-field=fullName]").style.color = "#372e29";
+    } else if (student.house.toLowerCase() === "ravenclaw") {
+      clone.querySelector(".single_student").style.backgroundColor = "#222f5b";
+      clone.querySelector(".single_student").style.color = "#946b2d";
+      clone.querySelector("[data-field=fullName]").style.color = "#946b2d";
+    }
   }
 
   // TODO background color if expelled
-  if (student.expelled === true) {
+  if (isHacked && student.expelled) {
+    clone.querySelector(".single_student").style.backgroundColor = "black";
+    clone.querySelector(".single_student").style.color = "#39ff14";
+    clone.querySelector("[data-field=fullName]").style.color = "#39ff14";
+  } else if (student.expelled === true) {
     clone.querySelector(".single_student").style.backgroundColor = "#333333";
     clone.querySelector(".single_student").style.color = "#aaaaaa";
     clone.querySelector("[data-field=fullName]").style.color = "#aaaaaa";
@@ -596,10 +623,20 @@ function displayStudentModal(student) {
   function clickExpel() {
     // console.log(`clickExpel`);
 
-    proceedPopup.style.display = "block";
-    proceedMessage.textContent = `${student.firstName} is about to be expelled. This is irreversible.`;
-    yesBtn.addEventListener("click", yesExpel);
-    noBtn.addEventListener("click", noExpel);
+    // todo when hacked and only for my name make it so that both buttons say no
+
+    if (isHacked && student.firstName === "Emma") {
+      proceedPopup.style.display = "block";
+      proceedMessage.textContent = `${student.firstName} is about to be expelled. This is irreversible.`;
+      yesBtn.innerHTML = "No";
+      yesBtn.addEventListener("click", noExpel);
+      noBtn.addEventListener("click", noExpel);
+    } else {
+      proceedPopup.style.display = "block";
+      proceedMessage.textContent = `${student.firstName} is about to be expelled. This is irreversible.`;
+      yesBtn.addEventListener("click", yesExpel);
+      noBtn.addEventListener("click", noExpel);
+    }
 
     function yesExpel() {
       yesBtn.removeEventListener("click", yesExpel);
@@ -902,14 +939,12 @@ function displayStudentModal(student) {
 // todo hack
 
 function hackTheSystem() {
-  console.log(`hackTheSystem`);
-
   //*** war plan
   // make sure the hacking only is called once and is only removed when reload page
   // todo call function that changes whole style (remember css file)
   // call function to inject myself in the list
   // todo call function hack bloods (purebloods have now a random blood status and all others have a pure blood status)
-  // todo make sure the expell popup on my student has two button that say no - as to not be able to expell me
+  // make sure the expell popup on my student has two button that say no - as to not be able to expell me
   // todo call function to remove all squad members -- notification to say it
   // todo make sure new squad members get removed after random time out -- with notification
 
@@ -918,8 +953,10 @@ function hackTheSystem() {
   // todo only hack once
   if (!isHacked) {
     isHacked = true;
+    console.log(`hackTheSystem`);
     // !call all those functions in here
-
+    // todo style
+    hackStyle();
     // todo popup to notify youve been hacked
     // make in html
     hackedPopup.style.display = "block";
@@ -937,6 +974,7 @@ function hackTheSystem() {
 // is Anyone surprised?
 
 function injectMe() {
+  console.log(`injectMe`);
   allStudents.push({
     firstName: "Emma",
     lastName: "Pasquer",
@@ -954,4 +992,9 @@ function injectMe() {
 
   console.log(allStudents);
   makeCurrentList();
+}
+
+function hackStyle() {
+  console.log("hackStyle");
+  document.querySelector("#css_sheet").href = "hacked_style.css";
 }

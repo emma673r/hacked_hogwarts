@@ -1,5 +1,7 @@
-html {
-  background-color: lightgoldenrodyellow;
+* {
+  color: #39ff14;
+  background-color: black;
+  font-family: monospace;
 }
 
 html,
@@ -12,7 +14,8 @@ footer {
 
 h1,
 header img {
-  background-color: inherit;
+  background-color: #39ff14;
+  color: black;
 }
 
 main {
@@ -28,12 +31,15 @@ header {
   flex-direction: column;
   align-items: center;
   padding-top: 30px;
-  background-color: goldenrod;
+  background-color: #39ff14;
   overflow: hidden;
 }
 
 button {
   cursor: pointer;
+  background-color: white;
+  color: #39ff14;
+  border: 1px solid #39ff14;
 }
 
 img {
@@ -57,7 +63,7 @@ img {
 
 .images_wrap img {
   width: 20%;
-  background-color: transparent;
+  background-color: black;
 }
 
 .wrapper {
@@ -74,7 +80,7 @@ img {
 }
 
 .login_box {
-  border: solid 1px black;
+  border: solid 1px #39ff14;
   padding: 20px;
   width: 40vw;
 }
@@ -84,7 +90,7 @@ img {
 }
 
 .student_image {
-  border: 6px double goldenrod;
+  border: 6px double #39ff14;
   padding: 3px;
 }
 
@@ -98,18 +104,28 @@ img {
 }
 
 .single_student {
-  border: 4px solid goldenrod;
+  border: 4px solid #39ff14;
+  color: black;
+  background-color: inherit;
   padding: 0 0 20px 20px;
   width: 45ch;
   cursor: pointer;
 }
 
-.single_student div {
+.single_student div{
   box-sizing: content-box;
+  background-color: inherit;
+}
+
+.single_student div div,
+.single_student div div u,
+.single_student div div b, .single_student div div img, .single_student h2 {
+  background-color: inherit;
+  color: black;
 }
 
 h2 {
-  color: brown;
+  color: #39ff14;
 }
 
 #student_modal {
@@ -127,8 +143,8 @@ h2 {
 
 .student-details-content,
 #proceed {
-  background-color: lightgoldenrodyellow;
-  border: 10px double goldenrod;
+  background-color: black;
+  border: 10px double #39ff14;
   padding: 30px;
   position: fixed;
   top: 20vh;
@@ -160,6 +176,7 @@ h2 {
 #proceed .wrapper {
   justify-content: space-around;
 }
+
 #login_page {
   position: fixed;
   width: 100%;
@@ -174,8 +191,8 @@ h2 {
 }
 
 #login_window {
-  background-color: lightgoldenrodyellow;
-  border: 10px double goldenrod;
+  background-color: black;
+  border: 10px double #39ff14;
   padding: 30px;
   position: fixed;
   width: 90vw;
@@ -223,12 +240,12 @@ main {
 }
 
 #section_1 {
-  border-right: solid 2px goldenrod;
+  border-right: solid 2px #39ff14;
   padding-right: 10px;
 }
 
 #section_3 {
-  border-left: solid 2px goldenrod;
+  border-left: solid 2px #39ff14;
   padding-left: 10px;
 }
 
@@ -243,10 +260,10 @@ main {
 footer {
   padding-left: 30px;
   padding-right: 30px;
-  color: goldenrod;
+  color: black;
+  background-color: #39ff14;
   margin-top: 60px;
   height: 30vh;
-  background-color: brown;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -254,18 +271,18 @@ footer {
 }
 
 footer h2 {
-  background-color: transparent;
-  color: goldenrod;
+  background-color: #39ff14;
+  color: black;
 }
 
 footer img {
-  background-color: transparent;
+  background-color: #39ff14;
   height: 60%;
 }
 
 .arrow_up {
   font-size: 5rem;
-  background-color: transparent;
+  background-color: black;
   width: 4ch;
   display: flex;
   justify-content: right;
@@ -273,14 +290,20 @@ footer img {
 
 footer div {
   width: 20ch;
+  background-color: #39ff14;
+}
+
+footer div p {
+  background-color: #39ff14;
+  color: black;
 }
 
 .secret {
-  color: transparent;
+  color: #39ff14;
 }
 
 .secret:hover {
-  color: goldenrod;
+  color: black;
 }
 
 #section_1 button {
@@ -289,22 +312,28 @@ footer div {
 }
 
 footer a {
-  color: goldenrod;
+  color: black;
+  background-color: #39ff14;
   text-decoration: none;
+}
+
+.arrow_up {
+  background-color: #39ff14;
 }
 
 #notification {
   position: fixed;
   bottom: 0;
   right: 0;
-  border: 2px double black;
-  background-color: white;
+  border: 3px double #39ff14;
+  background-color: black;
   padding: 50px;
 }
 
 button {
-  background-color: goldenrod;
-  border: solid 1px gold;
+  background-color: #39ff14;
+  border: solid 1px #39ff14;
+  color: black;
   padding: 10px;
   border-radius: 25px;
   margin-bottom: 5px;
@@ -313,12 +342,13 @@ button {
 input {
   padding: 10px;
   border-radius: 25px;
-  color: brown;
+  color: #39ff14;
+  background-color: black;
 }
 
 .sortby,
 .filterby {
-  background-color: brown;
+  background-color: black;
 }
 
 #sorting_bar button[data-dir="asc"]::after {
@@ -327,4 +357,10 @@ input {
 
 #sorting_bar button[data-dir="desc"]::after {
   content: "↑";
+}
+
+.isHacked {
+  color: #39ff14;
+  background-color: black;
+  font-family: monospace;
 }
