@@ -112,14 +112,16 @@ img {
   cursor: pointer;
 }
 
-.single_student div{
+.single_student div {
   box-sizing: content-box;
   background-color: inherit;
 }
 
 .single_student div div,
 .single_student div div u,
-.single_student div div b, .single_student div img, .single_student h2 {
+.single_student div div b,
+.single_student div img,
+.single_student h2 {
   background-color: inherit;
   color: black;
 }
@@ -348,7 +350,7 @@ input {
 .sortby,
 .filterby {
   background-color: black;
-  color:#39ff14 ;
+  color: #39ff14;
 }
 
 #sorting_bar button[data-dir="asc"]::after {
@@ -358,4 +360,3 @@ input {
 #sorting_bar button[data-dir="desc"]::after {
   content: "↑";
 }
-

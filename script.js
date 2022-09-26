@@ -7,6 +7,7 @@ let searchStudentList = [];
 let pureStudents = [];
 
 let isHacked = false;
+let keystroke = "";
 
 const settings = {
   filterBy: "all",
@@ -70,6 +71,9 @@ function registerBtn() {
   document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("click", selectSort));
   // search bar - input
   document.querySelector("#search_bar").addEventListener("input", searchInput);
+  // secret keystroke
+  // document.querySelector("#search_bar").addEventListener("input", getSecretKeystroke);
+  window.addEventListener("keydown", getSecretKeystroke);
 }
 
 // todo input search function
@@ -431,36 +435,8 @@ function makeCurrentList() {
   displayList(sortedList);
 }
 
-// function displayTotalCount(list) {
-//   let expelledStudents = [];
-//   let attendingStudents = [];
-
-//   list.forEach((student) => {
-//     if (student.expelled == true && student.attending == false) {
-//       expelledStudents.push(student);
-
-//     } else if (student.expelled == false && student.attending == true) {
-//       attendingStudents.push(student);
-//     }
-//   });
-
-//   console.log(`expelledStudents is`, expelledStudents);
-//   console.log(`attendingStudents is `, attendingStudents);
-
-//   document.querySelector("#count_total").textContent = `${attendingStudents.length} students attending school`;
-//   document.querySelector("#count_expelled").innerHTML = `<b>${expelledStudents.length}</b> expelled students`;
-// }
-// function displayTotalCount(list) {
-//   list = list.filter(isExpelled);
-//   console.log(`here`,list)
-// }
-
 function displayCounts(list) {
   // console.log(list);
-
-  // // start count list
-  // let startList = allStudents.length;
-  // document.querySelector("#count_start").innerHTML = `The year started with <b>${startList}</b> students`;
 
   // expelled list
   let expelledList = list.filter(isExpelled);
@@ -567,7 +543,12 @@ function displayStudent(student) {
   // TODO background color if expelled
   if (isHacked && student.expelled) {
     clone.querySelector(".single_student").style.backgroundColor = "black";
-    clone.querySelector(".single_student").style.color = "#39ff14";
+    clone.querySelectorAll(".single_student u").forEach((u) => {
+      u.style.color = "#39ff14";
+    });
+    clone.querySelectorAll(".single_student b").forEach((b) => {
+      b.style.color = "#39ff14";
+    });
     clone.querySelector("[data-field=fullName]").style.color = "#39ff14";
   } else if (student.expelled === true) {
     clone.querySelector(".single_student").style.backgroundColor = "#333333";
@@ -676,12 +657,15 @@ function displayStudentModal(student) {
 
   if (student.expelled == false) {
     studentModal.querySelector("[data-field=expelled]").textContent = "Attending";
+    studentModal.querySelector(".actions").style.display = "block";
   } else {
     studentModal.querySelector("[data-field=expel]").removeEventListener("click", clickExpel);
     studentModal.querySelector("[data-field=expel]").style.display = "none";
 
     studentModal.querySelector("[data-field=expelled]").textContent = "EXPELLED";
     studentModal.querySelector("[data-field=expelled]").style.fontSize = "2rem";
+
+    studentModal.querySelector(".actions").style.display = "none";
   }
 
   // if (student.expelled == true) {
@@ -966,7 +950,6 @@ function hackTheSystem() {
     hackedPopup.style.display = "block";
     hackedPopup.querySelector(".close").addEventListener("click", () => {
       hackedPopup.style.display = "none";
-
       //todo inject myself
       injectMe();
     });
@@ -1001,4 +984,55 @@ function injectMe() {
 function hackStyle() {
   console.log("hackStyle");
   document.querySelector("#css_sheet").href = "hacked_style.css";
+}
+
+function getSecretKeystroke(event) {
+  console.log(`getSecretKeystroke`);
+
+  // *--- method with input -----*
+
+  // const actualKeystroke += actualKey;
+  // console.log(event.target.value);
+
+  // keystroke = event.target.value;
+
+  // if (keystroke === "iddqd") {
+  //   hackTheSystem();
+  // }
+
+  // *--- method with keydown -----*
+
+  // ****** plan of attACK
+
+  // todo set a secret password
+  // todo get value for pressed key
+  // todo store pressed keys --- has to be outside of this function or else doesnt work
+  // !!!only store them if they match the characters in the password (probably use charAt() ???)
+  // todo compare each new keystroke to next key in password
+  // todo maybe get index from password to use when comparing ?
+  // todo    if actual key match char at same index in password, add char to keystroke
+  // todo    else reset keystroke completely (start from 0)
+  // todo when the keystroke is === password call hackthesystem()
+  // *******
+
+  console.log(event.key);
+  const secretKeystroke = "iddqd";
+  const pressedKey = event.key;
+
+  let keyIndex = keystroke.length;
+  let charToCompare = secretKeystroke.charAt(keyIndex);
+
+  console.log(charToCompare);
+
+  if (pressedKey === charToCompare) {
+    console.log(`pressed key match same index char in password`);
+    keystroke += pressedKey;
+    console.log(`keystroke is `, keystroke); // holy shit so cool
+  } else {
+    keystroke = "";
+  }
+
+  if (keystroke === secretKeystroke) {
+    hackTheSystem();
+  }
 }

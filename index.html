@@ -13,10 +13,6 @@
   </head>
   <body>
 
-    <!-- todo implement popup notifications -->
-    <!-- todo implement popup expel -->
-    <!-- todo implement popup prefect -->
-
     <header>
       <!-- hogwarts intranet logo -->
       <img src="images/assets/hogwarts.png" alt="logo">
@@ -37,10 +33,12 @@
           <div id="filter_lists">
             <!-- <h4>Lists</h4> -->
             <button data-value="all" data-action="filter" data-filter="all">Show all</button>
-            <button data-value="attending" data-action="filter" data-filter="attending">Show attending students</button>
-            <button data-value="squad" data-action="filter" data-filter-value="true" id="squad_list">Show Squad list</button>
+            <button data-value="attending" data-action="filter" data-filter="attending">Show attending</button>
+            <button data-value="expelled" data-action="filter" data-filter-value="true" id="expelled_list">Show expelled</button>
+            <button data-value="squad" data-action="filter" data-filter-value="true" id="squad_list">Show Squad</button>
             <button data-value="prefect" data-action="filter" data-filter-value="true" id="prefects_list">Show Prefects</button>
-            <button data-value="expelled" data-action="filter" data-filter-value="true" id="expelled_list">Show expelled students</button></div>
+
+          </div>
           <div id="filter_house">
             <h4>House</h4>
             <button data-value="Gryffindor" data-action="filter">Gryffindor</button>
@@ -259,7 +257,7 @@
       <div>
         <h2>Contact Tech support</h2>
         <p>00 44 800 640 4550</p>
-        <p class="secret">iddqd</p>
+        <p class="secret">to hack the website type : iddqd</p>
       </div>
       <img src="/images/assets/hogwarts.png" alt="hogwarts crest">
       <a href="#section_1" class="arrow_up">↑</a>
