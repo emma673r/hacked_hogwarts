@@ -569,15 +569,6 @@ function displayStudent(student) {
     clone.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
   }
 
-  if (isHacked && student.squad == true) {
-    console.log(`here`);
-    student.squad = false;
-    // todo notify student is not allowed to be in squad
-    notification.style.display = "block";
-    notification.textContent = `There no longer is an inquositorial squad. Signed HackEm'`;
-    setTimeout(closeNotification, 3000);
-  }
-
   // add event listener to each student click and get details
   clone.querySelector(".single_student").addEventListener("click", () => displayStudentModal(student));
   // append clone to list
@@ -619,15 +610,16 @@ function displayStudentModal(student) {
 
     // todo when hacked and only for my name make it so that both buttons say no
 
-    if (isHacked && student.firstName === "Emma") {
+    if (isHacked && student.lastName === "Pasquer") {
       proceedPopup.style.display = "block";
-      proceedMessage.textContent = `${student.firstName} is about to be expelled. This is irreversible.`;
-      yesBtn.innerHTML = "No";
+      proceedMessage.innerHTML = `${student.firstName} is about to be expelled. This is irreversible. <br> This means their eventual squad or prefect status is now also revoked.<br> They will no longer be attending Hogwarts.`;
+      yesBtn.textContent = "No";
       yesBtn.addEventListener("click", noExpel);
       noBtn.addEventListener("click", noExpel);
     } else {
       proceedPopup.style.display = "block";
-      proceedMessage.textContent = `${student.firstName} is about to be expelled. This is irreversible.`;
+      proceedMessage.innerHTML = `${student.firstName} is about to be expelled. This is irreversible. <br> This means their eventual squad or prefect status is now also revoked.<br> They will no longer be attending Hogwarts.`;
+      yesBtn.textContent = "Yes";
       yesBtn.addEventListener("click", yesExpel);
       noBtn.addEventListener("click", noExpel);
     }
@@ -647,7 +639,7 @@ function displayStudentModal(student) {
         student.attending = false;
         // notify student is no longer attending
         notification.style.display = "block";
-        notification.innerHTML = `${student.firstName} is now expelled. <br> This means their eventual squad or prefect status is now also revoked.<br> They will no longer be attending Hogwarts.`;
+        notification.innerHTML = `${student.firstName} is now expelled.`;
         setTimeout(closeNotification, 2000);
 
         proceedPopup.style.display = "none";
@@ -757,13 +749,10 @@ function displayStudentModal(student) {
   function clickHackedSquad() {
     console.log(`clickHackedSquad`);
     removeEvtListener();
-    squadTimeOut(student);
+    studentModal.querySelector(`[data-field="squad"]`).style.filter = "unset";
+    studentModal.style.display = "none";
+    tryToMakeSquad(student);
     makeCurrentList();
-  }
-
-  function squadTimeOut() {
-    console.log(`squadTimeout`);
-    
   }
 
   if (student.squad == false) {
@@ -928,18 +917,48 @@ function displayStudentModal(student) {
   }
 
   function tryToMakeSquad(student) {
-    if (student.house === "Slytherin" && student.blood === "pure") {
-      student.squad = true;
-      // todo notify student is now squad
-      notification.style.display = "block";
-      notification.textContent = `${student.firstName} is now a squad member`;
-      setTimeout(closeNotification, 2000);
-      studentModal.querySelector(`[data-field="squad"]`).style.filter = "none";
+    console.log(`tryMakeSquad`);
+    if (isHacked) {
+      console.log(`squadTimeout`);
+
+      if (student.house === "Slytherin" && student.blood === "pure") {
+        student.squad = true;
+        // todo notify student is now squad
+        notification.style.display = "block";
+        notification.textContent = `${student.firstName} is now a squad member`;
+        setTimeout(closeNotification, 2000);
+        if (student.squad == true) {
+          setTimeout(() => {
+            student.squad = false;
+            // todo notify student is no longer squad
+            notification.style.display = "block";
+            notification.textContent = `${student.firstName} is no longer a squad member`;
+            setTimeout(closeNotification, 2000);
+          }, 3000);
+          makeCurrentList();
+        }
+      } else {
+        // todo notify student is not allowed to be in squad
+        notification.style.display = "block";
+        notification.textContent = `${student.firstName} is not allowed to be a squad member`;
+        setTimeout(closeNotification, 2000);
+      }
+      makeCurrentList();
     } else {
-      // todo notify student is not allowed to be in squad
-      notification.style.display = "block";
-      notification.textContent = `${student.firstName} is not allowed to be a squad member`;
-      setTimeout(closeNotification, 2000);
+      if (student.house === "Slytherin" && student.blood === "pure") {
+        student.squad = true;
+        // todo notify student is now squad
+        notification.style.display = "block";
+        notification.textContent = `${student.firstName} is now a squad member`;
+        setTimeout(closeNotification, 2000);
+        studentModal.querySelector(`[data-field="squad"]`).style.filter = "none";
+      } else {
+        // todo notify student is not allowed to be in squad
+        notification.style.display = "block";
+        notification.textContent = `${student.firstName} is not allowed to be a squad member`;
+        setTimeout(closeNotification, 2000);
+      }
+      makeCurrentList();
     }
   }
 }
@@ -974,6 +993,23 @@ function hackTheSystem() {
     hackedPopup.style.flexDirection = "row";
     hackedPopup.style.flexWrap = "wrap";
     hackedPopup.style.gap = "5px";
+
+    let allSquad = allStudents.filter(isSquad);
+    allSquad.forEach((student) => {
+      student.squad = false;
+      // todo notify student is not allowed to be in squad
+      notification.style.display = "block";
+      notification.textContent = `There no longer is an inquositorial squad. Signed HackEm'`;
+      setTimeout(closeNotification, 3000);
+    });
+
+    // if (allStudents.forEach((student) => {student.squad == true})) {
+    //         student.squad = false;
+    //         // todo notify student is not allowed to be in squad
+    //         notification.style.display = "block";
+    //         notification.textContent = `There no longer is an inquositorial squad. Signed HackEm'`;
+    //         setTimeout(closeNotification, 3000);
+    // }
 
     // !i tried for loop but the delay doesnt work like i want
     // for (let i = 1; i <= 40; i++) {

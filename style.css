@@ -142,7 +142,6 @@ h2 {
   z-index: 500;
 }
 
-
 #proceed .wrapper {
   justify-content: space-around;
 }
@@ -283,10 +282,11 @@ footer a {
   position: fixed;
   bottom: 0;
   right: 0;
-  border: 2px double black;
-  background-color: white;
+  border: 4px double goldenrod;
+  background-color: lightgoldenrodyellow;
   padding: 50px;
   z-index: 900;
+  font-weight: bolder;
 }
 
 button {
