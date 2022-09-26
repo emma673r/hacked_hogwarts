@@ -125,7 +125,7 @@ h2 {
   align-items: center;
 }
 
-.student-details-content {
+.student-details-content, #proceed {
   background-color: lightgoldenrodyellow;
   border: 10px double goldenrod;
   padding: 30px;
@@ -136,7 +136,9 @@ h2 {
   display: flex;
   flex-direction: column;
 }
-
+#proceed .wrapper {
+  justify-content: space-around;
+}
 #login_page {
   position: fixed;
   width: 100%;

@@ -32,6 +32,10 @@ const studentList = document.getElementById("student_list");
 const template = document.getElementById("student");
 const studentModal = document.getElementById("student_modal");
 const notification = document.getElementById("notification");
+const proceedPopup = document.getElementById("proceed");
+const proceedMessage = document.getElementById("message_proceed");
+const yesBtn = document.getElementById("yes_btn");
+const noBtn = document.getElementById("no_btn");
 
 const urlList = "https://petlatkea.dk/2021/hogwarts/students.json";
 const urlBlood = "https://petlatkea.dk/2021/hogwarts/families.json";
@@ -40,6 +44,7 @@ const urlBlood = "https://petlatkea.dk/2021/hogwarts/families.json";
 function displayLogin() {
   studentModal.style.display = "none";
   notification.style.display = "none";
+  proceedPopup.style.display = "none";
 
   document.querySelector(".login_1").addEventListener("click", start);
   document.querySelector(".login_2").addEventListener("click", start);
@@ -633,7 +638,7 @@ function displayStudentModal(student) {
 
     if (student.prefect == false) {
       console.log("it was false and is now true");
-      student.prefect = true;
+      // student.prefect = true;
 
       studentModal.querySelector(`[data-field="prefect"]`).style.filter = "none";
       studentModal.style.display = "none";
@@ -705,59 +710,149 @@ function displayStudentModal(student) {
     document.querySelector("[data-field = makeSquad]").removeEventListener("click", clickSquad);
   }
 
-  function tryToMakePrefect(student) {
-    console.log(`TrytoMakePrfeect`);
-    // const prefects = allStudents.filter((student) => student.prefect);
-    // const other = prefects.filter((student) => student.house === selectedStudent.house);
+  function tryToMakePrefect(thisStudent) {
+    console.log(`TrytoMakePrefect`);
+    // make an array of all prefects
+    const prefectList = allStudents.filter(isPrefect);
+    console.log(prefectList);
+    // make an array of all prefects in same house as this student
+    const prefectSameHouseList = prefectList.filter((student) => student.house === thisStudent.house);
+    console.log(prefectSameHouseList);
 
-    // //if there is another of the same type
-    // if (other.length >= 2) {
-    //   console.log("there can only be two of each house");
-    //   removeAorB(other[0], other[1]);
-    // } else {
-    //   makePrefect(selectedStudent);
-    // }
+    // ***ACTION PLAN
 
-    // function removeAorB(prefectA, prefectB) {
-    //   //ask the user to ignore or remove a or b
-    //   document.querySelector("#warningbox_prefect").classList.remove("hide");
-    //   document.querySelector(".closebutton").addEventListener("click", closeDialog);
-    //   document.querySelector("#remove_a").addEventListener("click", clickRemoveA);
-    //   document.querySelector("#remove_b").addEventListener("click", clickRemoveB);
+    // TODo check if prefectSameHouseList length is under 2 (max 2 from same houses)
 
-    //   // show names on remove a or b button
-    //   document.querySelector("[data-field=prefectA]").textContent = prefectA.firstName;
-    //   document.querySelector("[data-field=prefectB]").textContent = prefectB.firstName;
+    // todo    if < 2 onto next if
+    // todo       if this student gender != student from prefectsamehouselist, make a prefect and remove other one
+    // todo       else not allowed to be a prefect
 
-    //   //if ignore - do nothing
-    //   function closeDialog() {
-    //     document.querySelector("#warningbox_prefect").classList.add("hide");
-    //     document.querySelector(".closebutton").removeEventListener("click", closeDialog);
-    //     document.querySelector("#remove_a").removeEventListener("click", clickRemoveA);
-    //     document.querySelector("#remove_b").removeEventListener("click", clickRemoveB);
-    //   }
-    //   // if remove a
-    //   function clickRemoveA() {
-    //     removePrefect(prefectA);
-    //     makePrefect(selectedStudent);
-    //     makeCurrentList();
-    //     closeDialog();
-    //   }
+    // todo    else ( >=2 ) check prefectsamehouselist genders
+    // todo      popup there are 2 prefets alreday (show both names) and ask if you want to proceed to add this student as prefect
+    // todo         if yes btn
+    // todo          if one of prefectsamehouselist students includes thisStudent.gender, add this student and remove the includes same gender
+    // todo          else add this student and remove the other one
+    // todo         else
+    // todo          close student modal and popup proceed
 
-    //   //else if - removeB
-    //   function clickRemoveB() {
-    //     removePrefect(prefectB);
-    //     makePrefect(selectedStudent);
-    //     makeCurrentList();
-    //     closeDialog();
-    //   }
-    // }
-    // function removePrefect(prefectStudent) {
-    //   prefectStudent.prefect = false;
-    // }
-    // function makePrefect(student) {
-    //   student.prefect = true;
-    // }
+    // *****
+
+    let numberOfPrefects = prefectSameHouseList.length;
+    let prefectA = prefectSameHouseList[0];
+    console.log(`prefectA is `, prefectA);
+    let prefectB = prefectSameHouseList[1];
+
+    if (numberOfPrefects >= 1 && numberOfPrefects < 2) {
+      if (thisStudent.gender !== prefectA.gender) {
+        thisStudent.prefect = true;
+
+        makePrefect(thisStudent);
+        // notify this student is now a prefect with prefectA
+        notification.style.display = "block";
+        notification.textContent = `${thisStudent.firstName} is now prefect with ${prefectA.firstName}`;
+        setTimeout(closeNotification, 2000);
+      } else {
+        thisStudent.prefect = false;
+
+        removePrefect(thisStudent);
+
+        // notify this student is not allowed to be a prefect beacuse of gender
+        notification.style.display = "block";
+        notification.textContent = `${
+          thisStudent.firstName
+        } is not allowed to be a prefect. There is alredy a ${thisStudent.gender.toLowerCase()} prefect from this house.`;
+        setTimeout(closeNotification, 2000);
+      }
+    } else if (numberOfPrefects === 0) {
+      thisStudent.prefect = true;
+
+      makePrefect(thisStudent);
+      console.log(`this student is now a prefect`);
+      // notify this student is now prefect
+      notification.style.display = "block";
+      notification.textContent = `${thisStudent.firstName} is now a prefect`;
+      setTimeout(closeNotification, 2000);
+    } else {
+      let thisStudentGender = thisStudent.gender.toLowerCase();
+
+      // make in html - done
+      proceedPopup.style.display = "block";
+      proceedMessage.textContent = `${prefectA.firstName} and ${prefectB.firstName} are the ${prefectA.house} prefects. To appoint ${thisStudent.firstName} as a prefect for this house, you have to eliminate their equivalent. `;
+      yesBtn.addEventListener("click", saidYes);
+      noBtn.addEventListener("click", saidNo);
+
+      function saidYes() {
+        yesBtn.removeEventListener("click", saidYes);
+        noBtn.removeEventListener("click", saidNo);
+
+        prefectSameHouseList = allStudents.filter(isPrefect);
+        prefectA = prefectSameHouseList[0];
+        console.log(`prefectA is `, prefectA);
+        prefectB = prefectSameHouseList[1];
+
+        thisStudentGender = thisStudent.gender;
+
+        // logs to check info
+
+        console.log("prefectA.gender is ", prefectA.gender);
+        console.log("prefectB.gender is ", prefectB.gender);
+        console.log("thisStudentGender is ", thisStudentGender);
+        console.log("thisStudent is ", thisStudent);
+
+        if (prefectA.gender === thisStudentGender) {
+          prefectA.prefect = false;
+          removePrefect(prefectA);
+          thisStudent.prefect = true;
+          makePrefect(thisStudent);
+          // prefectList.unshift();
+          // prefectList.push(thisStudent);
+
+          // notify this student is now prefect and prefectA is no longer prefect
+          notification.style.display = "block";
+          notification.textContent = `${thisStudent.firstName} is now prefect. ${prefectA.firstName} has been dismissed from prefects.`;
+          setTimeout(closeNotification, 2000);
+        } else if (prefectB.gender === thisStudentGender) {
+          prefectB.prefect = false;
+          removePrefect(prefectB);
+          thisStudent.prefect = true;
+          makePrefect(thisStudent);
+
+          // prefectList.pop();
+          // prefectList.push(thisStudent);
+
+          // notify this student is now prefect and prefectB is no longer prefect
+          notification.style.display = "block";
+          notification.textContent = `${thisStudent.firstName} is now prefect. ${prefectB.firstName} has been dismissed from prefects.`;
+          setTimeout(closeNotification, 2000);
+        }
+
+        studentModal.style.display = "none";
+        proceedPopup.style.display = "none";
+
+        console.log("prefect list is now ", prefectList);
+        return prefectSameHouseList;
+      }
+
+      function saidNo() {
+        studentModal.style.display = "none";
+        proceedPopup.style.display = "none";
+
+        yesBtn.removeEventListener("click", saidYes);
+        noBtn.removeEventListener("click", saidNo);
+
+        // notify this student is not a prefect because there already was 2 of them
+        notification.style.display = "block";
+        notification.textContent = `${thisStudent.firstName} has not been appointed as prefect as there already were 2 prefects in this house.`;
+        setTimeout(closeNotification, 2000);
+      }
+    }
+
+    function makePrefect(student) {
+      student.prefect = true;
+    }
+    function removePrefect(student) {
+      student.prefect = false;
+    }
   }
 
   function tryToMakeSquad(student) {
@@ -782,5 +877,3 @@ function displayStudentModal(student) {
 }
 
 // todo hack
-
-// TODO display counted arrays in display list i think ?? think about it
