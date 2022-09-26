@@ -106,9 +106,11 @@ async function fetchData() {
 function prepareData(list) {
   allStudents = list.map(cleanData);
   //   console.log(`allStudents is `, allStudents);
+  const startCount = allStudents.length;
+
+  displayStartCount(startCount);
 
   // todo display count students
-
   displayCounts(allStudents);
   displayDisplayedCount(allStudents);
 
@@ -419,13 +421,13 @@ function sortList(sortedList) {
 //get a list that both filters and sorts
 function makeCurrentList() {
   console.log(`makeCurrentList`);
+
   const currentList = filterList(allStudents);
 
   const sortedList = sortList(currentList);
 
   displayDisplayedCount(sortedList);
   displayCounts(allStudents);
-
   displayList(sortedList);
 }
 
@@ -456,9 +458,9 @@ function makeCurrentList() {
 function displayCounts(list) {
   // console.log(list);
 
-  // start count list
-  let startList = allStudents.length;
-  document.querySelector("#count_start").innerHTML = `The year started with <b>${startList}</b> students`;
+  // // start count list
+  // let startList = allStudents.length;
+  // document.querySelector("#count_start").innerHTML = `The year started with <b>${startList}</b> students`;
 
   // expelled list
   let expelledList = list.filter(isExpelled);
@@ -486,6 +488,10 @@ function displayCounts(list) {
   // !is only displayed when some kind of filtering is clicked
   let pureList = allStudents.filter(isPure).length;
   document.querySelector("#count_pure").innerHTML = `<b>${pureList}</b> pure bloods`;
+}
+
+function displayStartCount(list) {
+  document.querySelector("#count_start").innerHTML = `The year started with <b>${list}</b> students`;
 }
 
 function displayDisplayedCount(list) {
@@ -525,18 +531,16 @@ function displayStudent(student) {
       clone.querySelector(".single_student").style.backgroundColor = "#39ff14";
       clone.querySelector(".single_student").style.color = "black";
       clone.querySelector("[data-field=fullName]").style.color = "black";
-
-      clone.querySe = "#39ff14";
     } else if (student.house.toLowerCase() === "gryffindor") {
-      clone.querySelector(".single_student").style.backgroundColor = "#FF3131";
+      clone.querySelector(".single_student").style.backgroundColor = "#ff0000";
       clone.querySelector(".single_student").style.color = "black";
       clone.querySelector("[data-field=fullName]").style.color = "black";
     } else if (student.house.toLowerCase() === "hufflepuff") {
-      clone.querySelector(".single_student").style.backgroundColor = "#FFF01F";
+      clone.querySelector(".single_student").style.backgroundColor = "#ffff00";
       clone.querySelector(".single_student").style.color = "black";
       clone.querySelector("[data-field=fullName]").style.color = "black";
     } else if (student.house.toLowerCase() === "ravenclaw") {
-      clone.querySelector(".single_student").style.backgroundColor = "#1F51FF";
+      clone.querySelector(".single_student").style.backgroundColor = "#1f00ff";
       clone.querySelector(".single_student").style.color = "black";
       clone.querySelector("[data-field=fullName]").style.color = "black";
     }

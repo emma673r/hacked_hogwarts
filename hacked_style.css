@@ -119,7 +119,7 @@ img {
 
 .single_student div div,
 .single_student div div u,
-.single_student div div b, .single_student div div img, .single_student h2 {
+.single_student div div b, .single_student div img, .single_student h2 {
   background-color: inherit;
   color: black;
 }
@@ -335,7 +335,6 @@ button {
   border: solid 1px #39ff14;
   color: black;
   padding: 10px;
-  border-radius: 25px;
   margin-bottom: 5px;
 }
 
@@ -349,6 +348,7 @@ input {
 .sortby,
 .filterby {
   background-color: black;
+  color:#39ff14 ;
 }
 
 #sorting_bar button[data-dir="asc"]::after {
@@ -359,8 +359,3 @@ input {
   content: "↑";
 }
 
-.isHacked {
-  color: #39ff14;
-  background-color: black;
-  font-family: monospace;
-}
