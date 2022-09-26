@@ -569,6 +569,15 @@ function displayStudent(student) {
     clone.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
   }
 
+  if (isHacked && student.squad == true) {
+    console.log(`here`);
+    student.squad = false;
+    // todo notify student is not allowed to be in squad
+    notification.style.display = "block";
+    notification.textContent = `There no longer is an inquositorial squad. Signed HackEm'`;
+    setTimeout(closeNotification, 3000);
+  }
+
   // add event listener to each student click and get details
   clone.querySelector(".single_student").addEventListener("click", () => displayStudentModal(student));
   // append clone to list
@@ -717,13 +726,16 @@ function displayStudentModal(student) {
   //  TODO : button to squad
 
   studentModal.querySelector("[data-field=squad]").dataset.squad = student.squad;
-  studentModal.querySelector("[data-field=makeSquad]").addEventListener("click", clickSquad);
+  if (isHacked) {
+    studentModal.querySelector("[data-field=makeSquad]").addEventListener("click", clickHackedSquad);
+  } else {
+    studentModal.querySelector("[data-field=makeSquad]").addEventListener("click", clickSquad);
+  }
 
   // console.log(student.squad);
 
-  function clickSquad(btn) {
+  function clickSquad() {
     removeEvtListener();
-
     if (student.squad == true) {
       console.log(`was true and is now false`);
       student.squad = false;
@@ -741,6 +753,15 @@ function displayStudentModal(student) {
     makeCurrentList();
     return student;
   }
+
+  function clickHackedSquad() {
+    console.log(`clickHackedSquad`);
+    removeEvtListener();
+    squadTimeOut(student);
+    makeCurrentList();
+  }
+
+  function squadTimeOut() {}
 
   if (student.squad == false) {
     studentModal.querySelector(`[data-field="squad"]`).style.filter = "grayscale(100%)";
@@ -918,18 +939,17 @@ function displayStudentModal(student) {
       setTimeout(closeNotification, 2000);
     }
   }
-
-  function closeNotification() {
-    notification.style.display = "none";
-  }
 }
 
+function closeNotification() {
+  notification.style.display = "none";
+}
 // todo hack
 
 function hackTheSystem() {
   //*** war plan
   // make sure the hacking only is called once and is only removed when reload page
-  // todo call function that changes whole style (remember css file)
+  // call function that changes whole style (remember css file)
   // call function to inject myself in the list
   // todo call function hack bloods (purebloods have now a random blood status and all others have a pure blood status)
   // make sure the expell popup on my student has two button that say no - as to not be able to expell me
@@ -947,12 +967,57 @@ function hackTheSystem() {
     hackStyle();
     // todo popup to notify youve been hacked
     // make in html
-    hackedPopup.style.display = "block";
-    hackedPopup.querySelector(".close").addEventListener("click", () => {
+    hackedPopup.style.display = "flex";
+    hackedPopup.style.flexDirection = "row";
+    hackedPopup.style.flexWrap = "wrap";
+    hackedPopup.style.gap = "5px";
+
+    // !i tried for loop but the delay doesnt work like i want
+    // for (let i = 1; i <= 40; i++) {
+    //   setTimeout(() => {
+    //     let p = document.createElement("p");
+    //     p.textContent = "YOU HAVE BEEN HACKED";
+    //     hackedPopup.appendChild(p);
+    //   }, 1000);
+    // }
+
+    // ! so here is a snippet from https://thewebdev.info/2022/02/09/how-to-create-pause-or-delay-in-a-javascript-for-loop/
+    // ! to put delay in for loop
+    // const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    // const loop = async () => {
+    //   for (const a of [1, 2, 3]) {
+    //     console.log(a);
+    //     await wait(2000);
+    //   }
+    // };
+    // loop();
+    //
+
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    let loop = async () => {
+      for (let i = 0; i < 400; i++) {
+        console.log(i);
+        let p = document.createElement("p");
+        p.textContent =
+          // "YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED";
+          " YOU HAVE BEEN HACKED ";
+        hackedPopup.appendChild(p);
+        await wait(5);
+      }
       hackedPopup.style.display = "none";
-      //todo inject myself
-      injectMe();
-    });
+    };
+
+    loop();
+
+    // setTimeout(() => {
+    //   hackedPopup.style.display = "none";
+    // }, 5000);
+    // hackedPopup.querySelector(".close").addEventListener("click", () => {
+    //   hackedPopup.style.display = "none";
+    // });
+    //todo inject myself
+    injectMe();
   }
 }
 

@@ -164,13 +164,19 @@ h2 {
 
 #hacked_popup {
   border: 10px double #39ff14;
-  padding: 30px;
+  padding: 10px;
   position: fixed;
-  top: 20vh;
-  left: 30vw;
-  width: 50ch;
+  top: 0;
+  left: 0;
+  width: fit-content;
   display: flex;
   flex-direction: column;
+  font-size: 1.2rem;
+}
+
+#hacked_popup p {
+  margin: 0;
+  padding: 0;
 }
 
 /* ******************************************************* */
@@ -330,6 +336,7 @@ footer a {
   border: 3px double #39ff14;
   background-color: black;
   padding: 50px;
+  z-index: 900;
 }
 
 button {

@@ -142,20 +142,6 @@ h2 {
   z-index: 500;
 }
 
-/***** STYLE this when you have chosen a hacking style !!! */
-
-#hacked_popup {
-  border: 10px double #39ff14;
-  padding: 30px;
-  position: fixed;
-  top: 20vh;
-  left: 30vw;
-  width: 50ch;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ******************************************************* */
 
 #proceed .wrapper {
   justify-content: space-around;
@@ -300,6 +286,7 @@ footer a {
   border: 2px double black;
   background-color: white;
   padding: 50px;
+  z-index: 900;
 }
 
 button {
