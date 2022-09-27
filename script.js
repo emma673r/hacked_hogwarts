@@ -1200,7 +1200,7 @@ function injectMe() {
     lastName: "Pasquer",
     middleName: "No middle Name",
     nickName: "HackEm'",
-    house: "hufflepuff",
+    house: "Hufflepuff",
     blood: "muggle",
     gender: "Hacker",
     prefect: false,
@@ -1209,6 +1209,7 @@ function injectMe() {
     attending: true,
     expelled: false,
   });
+  makeCurrentList();
 }
 
 function hackStyle() {
