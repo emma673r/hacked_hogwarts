@@ -503,7 +503,7 @@ function displayStudent(student) {
   clone.querySelector("[data-field=gender]").innerHTML = `<u>Gender</u> : <b>${student.gender}</b>`;
   clone.querySelector("[data-field=imgSrc]").src = student.image;
   clone.querySelector("[data-field=imgSrc]").alt = `picture of ${student.lastName}, ${student.firstName}`;
-  clone.querySelector(`[data-field="imgHouseSrc"]`).src = `/images/house/${student.house.toLowerCase()}.png`;
+  clone.querySelector(`[data-field="imgHouseSrc"]`).src = `./images/house/${student.house.toLowerCase()}.png`;
   clone.querySelector(`[data-field="imgHouseSrc"]`).alt = `${student.house}`;
 
   // TODO add background and text color to members of each house
@@ -601,11 +601,11 @@ function displayStudentModal(student) {
   // TODO add blood status
   studentModal.querySelector("[data-field=bloodStatus]").innerHTML = `<u>Blood Status</u> : ${student.blood}`;
 
-  studentModal.querySelector(`[data-field="imgHouseSrc"]`).src = `/images/house/${student.house.toLowerCase()}.png`;
+  studentModal.querySelector(`[data-field="imgHouseSrc"]`).src = `./images/house/${student.house.toLowerCase()}.png`;
   studentModal.querySelector(`[data-field="imgHouseSrc"]`).alt = `${student.house}`;
 
-  studentModal.querySelector(`[data-field="squad"]`).src = `/images/assets/squad.png`;
-  studentModal.querySelector(`[data-field="prefect"]`).src = `/images/assets/prefect.png`;
+  studentModal.querySelector(`[data-field="squad"]`).src = `./images/assets/squad.png`;
+  studentModal.querySelector(`[data-field="prefect"]`).src = `./images/assets/prefect.png`;
 
   // todo colors for popups aswell
   if (isHacked) {
