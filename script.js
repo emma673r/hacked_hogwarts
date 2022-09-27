@@ -602,6 +602,67 @@ function displayStudentModal(student) {
   studentModal.querySelector(`[data-field="squad"]`).src = `/images/assets/squad.png`;
   studentModal.querySelector(`[data-field="prefect"]`).src = `/images/assets/prefect.png`;
 
+  // todo colors for popups aswell
+  if (isHacked) {
+    if (student.house.toLowerCase() === "slytherin") {
+      studentModal.querySelector(".student-details-content").style.borderColor = "#39ff14";
+      studentModal.querySelector(".student-details-content").style.backgroundColor = "black";
+      studentModal.querySelectorAll(".student-details-content button").forEach((button) => {
+        button.style.backgroundColor = "#39ff14";
+        button.style.borderColor = "#39ff14";
+      });
+      studentModal.querySelector(".student-details-content").style.color = "black";
+      studentModal.querySelector("[data-field=fullName]").style.color = "#39ff14";
+    } else if (student.house.toLowerCase() === "gryffindor") {
+      studentModal.querySelector(".student-details-content").style.borderColor = "#ff0000";
+      studentModal.querySelector(".student-details-content").style.backgroundColor = "black";
+      studentModal.querySelectorAll(".student-details-content button").forEach((button) => {
+        button.style.backgroundColor = "#ff0000";
+        button.style.borderColor = "#ff0000";
+      });
+      studentModal.querySelector(".student-details-content").style.color = "black";
+      studentModal.querySelector("[data-field=fullName]").style.color = "#ff0000";
+    } else if (student.house.toLowerCase() === "hufflepuff") {
+      studentModal.querySelector(".student-details-content").style.borderColor = "#ffff00";
+      studentModal.querySelector(".student-details-content").style.backgroundColor = "black";
+      studentModal.querySelectorAll(".student-details-content button").forEach((button) => {
+        button.style.backgroundColor = "#ffff00";
+        button.style.borderColor = "#ffff00";
+      });
+
+      studentModal.querySelector(".student-details-content").style.color = "black";
+      studentModal.querySelector("[data-field=fullName]").style.color = "#ffff00";
+    } else if (student.house.toLowerCase() === "ravenclaw") {
+      studentModal.querySelector(".student-details-content").style.borderColor = "#1f00ff";
+      studentModal.querySelector(".student-details-content").style.backgroundColor = "black";
+
+      studentModal.querySelectorAll(".student-details-content button").forEach((button) => {
+        button.style.backgroundColor = "#1f00ff";
+        button.style.borderColor = "#1f00ff";
+      });
+      studentModal.querySelector(".student-details-content").style.color = "black";
+      studentModal.querySelector("[data-field=fullName]").style.color = "#1f00ff";
+    }
+  } else {
+    if (student.house.toLowerCase() === "slytherin") {
+      studentModal.querySelector(".student-details-content").style.backgroundColor = "#1a472a";
+      studentModal.querySelector(".student-details-content").style.color = "#aaaaaa";
+      studentModal.querySelector("[data-field=fullName]").style.color = "#aaaaaa";
+    } else if (student.house.toLowerCase() === "gryffindor") {
+      studentModal.querySelector(".student-details-content").style.backgroundColor = "#740001";
+      studentModal.querySelector(".student-details-content").style.color = "goldenrod";
+      studentModal.querySelector("[data-field=fullName]").style.color = "goldenrod";
+    } else if (student.house.toLowerCase() === "hufflepuff") {
+      studentModal.querySelector(".student-details-content").style.backgroundColor = "#f0c75e";
+      studentModal.querySelector(".student-details-content").style.color = "#372e29";
+      studentModal.querySelector("[data-field=fullName]").style.color = "#372e29";
+    } else if (student.house.toLowerCase() === "ravenclaw") {
+      studentModal.querySelector(".student-details-content").style.backgroundColor = "#222f5b";
+      studentModal.querySelector(".student-details-content").style.color = "#946b2d";
+      studentModal.querySelector("[data-field=fullName]").style.color = "#946b2d";
+    }
+  }
+
   //  TODO : button to expell
 
   studentModal.querySelector("[data-field=expel]").style.display = "unset";
@@ -776,10 +837,10 @@ function displayStudentModal(student) {
   function tryToMakePrefect(thisStudent) {
     console.log(`TrytoMakePrefect`);
     // make an array of all prefects
-    const prefectList = allStudents.filter(isPrefect);
+    let prefectList = allStudents.filter(isPrefect);
     console.log(prefectList);
     // make an array of all prefects in same house as this student
-    const prefectSameHouseList = prefectList.filter((student) => student.house === thisStudent.house);
+    let prefectSameHouseList = prefectList.filter((student) => student.house === thisStudent.house);
     console.log(prefectSameHouseList);
 
     // ***ACTION PLAN
@@ -861,6 +922,7 @@ function displayStudentModal(student) {
         console.log("prefectB.gender is ", prefectB.gender);
         console.log("thisStudentGender is ", thisStudentGender);
         console.log("thisStudent is ", thisStudent);
+        console.log("prefectSameHouseList is ", prefectSameHouseList);
 
         if (prefectA.gender === thisStudentGender) {
           prefectA.prefect = false;
@@ -925,7 +987,7 @@ function displayStudentModal(student) {
       random = Math.floor(Math.random() * 3);
       console.log(`random is`, random);
 
-      if (student.house === "Slytherin" && student.blood === "pure") {
+      if (student.house === "Slytherin" || student.blood === "pure") {
         student.squad = true;
         // todo notify student is now squad
         notification.style.display = "block";
@@ -978,7 +1040,7 @@ function hackTheSystem() {
   // make sure the hacking only is called once and is only removed when reload page
   // call function that changes whole style (remember css file)
   // call function to inject myself in the list
-  // todo call function hack bloods (purebloods have now a random blood status and all others have a pure blood status)
+  // call function hack bloods (purebloods have now a random blood status and all others have a pure blood status)
   // make sure the expell popup on my student has two button that say no - as to not be able to expell me
   // call function to remove all squad members -- notification to say it
   // make sure new squad members get removed after random time -- with notification
@@ -1005,7 +1067,7 @@ function hackTheSystem() {
       // todo notify student is not allowed to be in squad
       notification.style.display = "block";
       notification.textContent = `There no longer is an inquositorial squad. Signed HackEm'`;
-      setTimeout(closeNotification, 3000);
+      setTimeout(closeNotification, 6000);
     });
 
     // if (allStudents.forEach((student) => {student.squad == true})) {
@@ -1040,14 +1102,14 @@ function hackTheSystem() {
 
     const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     let loop = async () => {
-      for (let i = 0; i < 400; i++) {
+      for (let i = 0; i < 220; i++) {
         console.log(i);
         let p = document.createElement("p");
         p.textContent =
           // "YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED YOU HAVE BEEN HACKED";
           " YOU HAVE BEEN HACKED ";
         hackedPopup.appendChild(p);
-        await wait(5);
+        await wait(10);
       }
       hackedPopup.style.display = "none";
     };
@@ -1062,6 +1124,8 @@ function hackTheSystem() {
     // });
     //todo inject myself
     injectMe();
+
+    hackBlood();
   }
 }
 
@@ -1077,7 +1141,7 @@ function injectMe() {
     middleName: "No middle Name",
     nickName: "HackEm'",
     house: "hufflepuff",
-    blood: "Muggle",
+    blood: "muggle",
     gender: "Hacker",
     prefect: false,
     squad: false,
@@ -1085,9 +1149,6 @@ function injectMe() {
     attending: true,
     expelled: false,
   });
-
-  console.log(allStudents);
-  makeCurrentList();
 }
 
 function hackStyle() {
@@ -1144,4 +1205,24 @@ function getSecretKeystroke(event) {
   if (keystroke === secretKeystroke) {
     hackTheSystem();
   }
+}
+
+function hackBlood() {
+  console.log(allStudents);
+  allStudents.forEach((student) => {
+    if (student.blood === "muggle") {
+      student.blood = "pure";
+    } else if (student.blood === "half") {
+      student.blood = "pure";
+    } else {
+      random = Math.floor(Math.random() * 3);
+      if (random === 0) {
+        student.blood = "muggle";
+      } else if (random === 1) {
+        student.blood = "half";
+      } else {
+        student.blood = "pure";
+      }
+    }
+  });
 }

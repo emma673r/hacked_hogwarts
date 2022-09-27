@@ -336,7 +336,7 @@ footer a {
   border: 3px double #39ff14;
   background-color: black;
   padding: 50px;
-  z-index: 900;
+  z-index: 999;
 }
 
 button {
