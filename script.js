@@ -59,6 +59,8 @@ function displayLogin() {
 
 function start() {
   //   console.log(`start`);
+  playClick();
+  playLoginSound();
   document.querySelector("#login_page").style.display = "none";
   // TODO: register all buttons
   registerBtn();
@@ -267,6 +269,7 @@ function cleanData(elm) {
 // TODO FILTER
 
 function selectFilter(event) {
+  playClick();
   const filter = event.target.dataset.value;
   // console.log(`user selected ${filter}`);
 
@@ -374,6 +377,7 @@ function isGirl(student) {
 // TODO SORT
 
 function selectSort(event) {
+  playClick();
   const sort = event.target.dataset.sort;
   const sortDir = event.target.dataset.dir;
 
@@ -579,6 +583,7 @@ function displayStudent(student) {
 
 // * display single students extra info modal
 function displayStudentModal(student) {
+  playClick();
   //   console.log(`displayStudentModal`);
   studentModal.style.display = "block";
   studentModal.querySelector(".close").addEventListener("click", () => {
@@ -670,10 +675,11 @@ function displayStudentModal(student) {
 
   function clickExpel() {
     // console.log(`clickExpel`);
+    playClick();
 
     // todo when hacked and only for my name make it so that both buttons say no
 
-    if (isHacked && student.lastName === "Pasquer") {
+    if (student.lastName === "Pasquer") {
       proceedPopup.style.display = "block";
       proceedMessage.innerHTML = `${student.firstName} is about to be expelled. This is irreversible. <br> This means their eventual squad or prefect status is now also revoked.<br> They will no longer be attending Hogwarts.`;
       yesBtn.textContent = "No";
@@ -688,6 +694,7 @@ function displayStudentModal(student) {
     }
 
     function yesExpel() {
+      playCut();
       yesBtn.removeEventListener("click", yesExpel);
       noBtn.removeEventListener("click", noExpel);
 
@@ -713,6 +720,7 @@ function displayStudentModal(student) {
     }
 
     function noExpel() {
+      playClick();
       student.expelled = false;
       proceedPopup.style.display = "none";
       studentModal.style.display = "none";
@@ -758,6 +766,7 @@ function displayStudentModal(student) {
       // TODO onto the rules of being a prefect
       tryToMakePrefect(student);
     } else {
+      playBump();
       console.log("it was true and is now false");
       // todo notify student is no longer prefect
       notification.style.display = "block";
@@ -792,6 +801,7 @@ function displayStudentModal(student) {
   function clickSquad() {
     removeEvtListener();
     if (student.squad == true) {
+      playBump();
       console.log(`was true and is now false`);
       student.squad = false;
       studentModal.style.display = "none";
@@ -868,6 +878,7 @@ function displayStudentModal(student) {
 
     if (numberOfPrefects >= 1 && numberOfPrefects < 2) {
       if (thisStudent.gender !== prefectA.gender) {
+        playSuccess();
         thisStudent.prefect = true;
 
         makePrefect(thisStudent);
@@ -876,6 +887,7 @@ function displayStudentModal(student) {
         notification.textContent = `${thisStudent.firstName} is now prefect with ${prefectA.firstName}`;
         setTimeout(closeNotification, 2000);
       } else {
+        playBump();
         thisStudent.prefect = false;
 
         removePrefect(thisStudent);
@@ -888,6 +900,7 @@ function displayStudentModal(student) {
         setTimeout(closeNotification, 2000);
       }
     } else if (numberOfPrefects === 0) {
+      playSuccess();
       thisStudent.prefect = true;
 
       makePrefect(thisStudent);
@@ -897,6 +910,7 @@ function displayStudentModal(student) {
       notification.textContent = `${thisStudent.firstName} is now a prefect`;
       setTimeout(closeNotification, 2000);
     } else {
+      playClick();
       let thisStudentGender = thisStudent.gender.toLowerCase();
 
       // make in html - done
@@ -925,6 +939,8 @@ function displayStudentModal(student) {
         console.log("prefectSameHouseList is ", prefectSameHouseList);
 
         if (prefectA.gender === thisStudentGender) {
+          playBump();
+          playSuccess();
           prefectA.prefect = false;
           removePrefect(prefectA);
           thisStudent.prefect = true;
@@ -937,6 +953,8 @@ function displayStudentModal(student) {
           notification.textContent = `${thisStudent.firstName} is now prefect. ${prefectA.firstName} has been dismissed from prefects.`;
           setTimeout(closeNotification, 2000);
         } else if (prefectB.gender === thisStudentGender) {
+          playBump();
+          playSuccess();
           prefectB.prefect = false;
           removePrefect(prefectB);
           thisStudent.prefect = true;
@@ -959,6 +977,7 @@ function displayStudentModal(student) {
       }
 
       function saidNo() {
+        playClick();
         studentModal.style.display = "none";
         proceedPopup.style.display = "none";
 
@@ -973,9 +992,11 @@ function displayStudentModal(student) {
     }
 
     function makePrefect(student) {
+      playSuccess();
       student.prefect = true;
     }
     function removePrefect(student) {
+      playBump();
       student.prefect = false;
     }
   }
@@ -988,6 +1009,7 @@ function displayStudentModal(student) {
       console.log(`random is`, random);
 
       if (student.house === "Slytherin" || student.blood === "pure") {
+        playSuccess();
         student.squad = true;
         // todo notify student is now squad
         notification.style.display = "block";
@@ -995,6 +1017,7 @@ function displayStudentModal(student) {
         setTimeout(closeNotification, 2000);
 
         if (student.squad == true) {
+          playBump();
           let times = [4000, 2000, 7000];
           setTimeout(() => {
             student.squad = false;
@@ -1005,6 +1028,7 @@ function displayStudentModal(student) {
           }, times[random]);
         }
       } else {
+        playClick();
         // todo notify student is not allowed to be in squad
         notification.style.display = "block";
         notification.textContent = `${student.firstName} is not allowed to be a squad member`;
@@ -1013,6 +1037,7 @@ function displayStudentModal(student) {
       // makeCurrentList();
     } else {
       if (student.house === "Slytherin" && student.blood === "pure") {
+        playSuccess();
         student.squad = true;
         // todo notify student is now squad
         notification.style.display = "block";
@@ -1020,6 +1045,7 @@ function displayStudentModal(student) {
         setTimeout(closeNotification, 2000);
         studentModal.querySelector(`[data-field="squad"]`).style.filter = "none";
       } else {
+        playClick();
         // todo notify student is not allowed to be in squad
         notification.style.display = "block";
         notification.textContent = `${student.firstName} is not allowed to be a squad member`;
@@ -1049,6 +1075,9 @@ function hackTheSystem() {
 
   // todo only hack once
   if (!isHacked) {
+    playGlitch();
+    playMandrake();
+
     isHacked = true;
     console.log(`hackTheSystem`);
     // !call all those functions in here
@@ -1062,13 +1091,17 @@ function hackTheSystem() {
     hackedPopup.style.gap = "5px";
 
     let allSquad = allStudents.filter(isSquad);
-    allSquad.forEach((student) => {
-      student.squad = false;
-      // todo notify student is not allowed to be in squad
-      notification.style.display = "block";
-      notification.textContent = `There no longer is an inquositorial squad. Signed HackEm'`;
-      setTimeout(closeNotification, 6000);
-    });
+
+    setTimeout(() => {
+      allSquad.forEach((student) => {
+        student.squad = false;
+        // todo notify student is not allowed to be in squad
+        notification.style.display = "block";
+        notification.textContent = `There no longer is an inquositorial squad. Signed HackEm'`;
+        setTimeout(closeNotification, 6000);
+        playBadSpell();
+      });
+    }, 4000);
 
     // if (allStudents.forEach((student) => {student.squad == true})) {
     //         student.squad = false;
@@ -1113,9 +1146,35 @@ function hackTheSystem() {
       }
       hackedPopup.style.display = "none";
     };
-
     loop();
 
+    setTimeout(() => {
+      playGlitch();
+    }, 1500);
+    setTimeout(() => {
+      playGlitch();
+    }, 5000);
+    setTimeout(() => {
+      playGlitch();
+    }, 15000);
+    setTimeout(() => {
+      playGlitch();
+    }, 20000);
+    setTimeout(() => {
+      playGlitch();
+    }, 30000);
+    setTimeout(() => {
+      playGlitch();
+    }, 50000);
+    setTimeout(() => {
+      playGlitch();
+    }, 55000);
+    setTimeout(() => {
+      playGlitch();
+    }, 70000);
+    setTimeout(() => {
+      playGlitch();
+    }, 100000);
     // setTimeout(() => {
     //   hackedPopup.style.display = "none";
     // }, 5000);
@@ -1134,6 +1193,7 @@ function hackTheSystem() {
 // is Anyone surprised?
 
 function injectMe() {
+  playGlitch();
   console.log(`injectMe`);
   allStudents.push({
     firstName: "Emma",
@@ -1152,6 +1212,7 @@ function injectMe() {
 }
 
 function hackStyle() {
+  playGlitch();
   console.log("hackStyle");
   document.querySelector("#css_sheet").href = "hacked_style.css";
 }
@@ -1203,11 +1264,13 @@ function getSecretKeystroke(event) {
   }
 
   if (keystroke === secretKeystroke) {
+    playGlitch();
     hackTheSystem();
   }
 }
 
 function hackBlood() {
+  playGlitch();
   console.log(allStudents);
   allStudents.forEach((student) => {
     if (student.blood === "muggle") {
@@ -1225,4 +1288,32 @@ function hackBlood() {
       }
     }
   });
+}
+
+function playBadSpell() {
+  document.querySelector("#bad_spell").play();
+}
+function playGoodpell() {
+  document.querySelector("#good_spell").play();
+}
+function playCut() {
+  document.querySelector("#cut").play();
+}
+function playBump() {
+  document.querySelector("#bump").play();
+}
+function playGlitch() {
+  document.querySelector("#glitch").play();
+}
+function playLoginSound() {
+  document.querySelector("#login_sound").play();
+}
+function playMandrake() {
+  document.querySelector("#mandrake").play();
+}
+function playSuccess() {
+  document.querySelector("#success").play();
+}
+function playClick() {
+  document.querySelector("#click").play();
 }
