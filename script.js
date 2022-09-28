@@ -217,7 +217,7 @@ function cleanData(elm) {
 
   // if student name has no last name - Leanne
   if (!fullName.includes(" ")) {
-    image = `/images/no_image.png`;
+    image = `./images/no_image.png`;
   }
   // only 2 img src same last name - Patil (Parvati & Padma)
   // so if student name includes patil
@@ -1205,7 +1205,7 @@ function injectMe() {
     gender: "Hacker",
     prefect: false,
     squad: false,
-    image: `/images/emma_p.png`,
+    image: `./images/emma_p.png`,
     attending: true,
     expelled: false,
   });
